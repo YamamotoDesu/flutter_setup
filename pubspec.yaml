@@ -100,7 +100,7 @@ flavorizr:
         name: "EcomApp"
 
       android:
-        applicationId: "kyo.desu.ecom_app"
+        applicationId: "kyo.desu.ecomapp.dev"
         generateDummyAssets: true
         # icon: ""
         customConfig:
@@ -108,7 +108,7 @@ flavorizr:
           versionNameSuffix: '"Dev"'
           signingConfig: signingConfigs.dev
       ios:
-        bundleId: "kyo.desu.ecom_app.dev"
+        bundleId: "kyo.desu.ecomapp.dev"
         generateDummyAssets: true
         # icon: ""
         buildSettings:
@@ -118,7 +118,7 @@ flavorizr:
         name: "EcomApp"
 
       android:
-        applicationId: "kyo.desu.ecom_app"
+        applicationId: "kyo.desu.ecomapp.qa"
         generateDummyAssets: true
         # icon: ""
         customConfig:
@@ -126,7 +126,7 @@ flavorizr:
           versionNameSuffix: '"QA"'
           signingConfig: signingConfigs.qa
       ios:
-        bundleId: "kyo.desu.ecom_app.qa"
+        bundleId: "kyo.desu.ecomapp.qa"
         generateDummyAssets: true
         # icon: ""
         buildSettings:
@@ -136,7 +136,7 @@ flavorizr:
         name: "EcomApp"
 
       android:
-        applicationId: "kyo.desu.ecom_app"
+        applicationId: "kyo.desu.ecomapp.uat"
         generateDummyAssets: true
         # icon: ""
         customConfig:
@@ -144,7 +144,7 @@ flavorizr:
           versionNameSuffix: '"UAT"'
           signingConfig: signingConfigs.uat
       ios:
-        bundleId: "kyo.desu.ecom_app.uat"
+        bundleId: "kyo.desu.ecomapp.uat"
         generateDummyAssets: true
         # icon: ""
         buildSettings:
@@ -154,13 +154,13 @@ flavorizr:
         name: "EcomApp"
 
       android:
-        applicationId: "kyo.desu.ecom_app"
+        applicationId: "kyo.desu.ecomapp"
         generateDummyAssets: true
         # icon: ""
         customConfig:
           signingConfig: signingConfigs.prod
       ios:
-        bundleId: "kyo.desu.ecom_app"
+        bundleId: "kyo.desu.ecomapp"
         generateDummyAssets: true
         # icon: ""
         buildSettings:
