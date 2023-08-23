@@ -132,3 +132,237 @@ Command
 ```
 flutter pub run flutter_flavorizr
 ```
+
+## 4. Configure Environment
+lib/core/flavor/flavor.dart
+```dart
+enum Flavor {
+  dev,
+  qa,
+  uat,
+  prod,
+}
+```
+
+lib/core/env/env_reader.dart
+```dart
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:ecom_app/core/flavor/flavor.dart';
+
+class EnvReader {
+  String getEnvFileName(Flavor flavor) {
+    return ".${flavor.name}.env";
+  }
+}
+```
+
+lib/main_dev.dart
+```dart
+
+Future<void> main() async {
+  mainApp(Flavor.dev);
+}
+
+```
+
+## 6. Flutter Riverpod Configuration
+lib/core/env/env_reader.dart
+```dart
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../flavor/flavor.dart';
+
+final envReaderProvider = Provider<EnvReader>((ref) {
+  return EnvReader();
+});
+```
+
+lib/main.dart
+```dart
+FutureOr<void> mainApp(Flavor flavor) async {
+  // An object that stores the state of the providers and allows overriding the behavior of a specific provider.
+  final container = ProviderContainer();
+
+  final envReader = container.read(envReaderProvider);
+  final envFile = envReader.getEnvFileName(flavor);
+  await dotenv.load(fileName: envFile);
+
+  runApp(
+    UncontrolledProviderScope(
+      container: container,
+      child: const MainWidget(),
+    ),
+  );
+}
+```
+
+## 7. Flutter Lint
+
+```yaml
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  plugins:
+    #- dart_code_metrics
+  exclude:
+    - "**/**.g.dart"
+    - "lib/**.g.dart"
+    - "**/**.freezed.dart"
+    - "lib/**.freezed.dart"
+    - "lib/i18n/*"
+    - "build/**"
+    - "lib/generated/**"
+
+  language:
+    #strict-casts: true
+    #strict-inference: true
+    #strict-raw-types: true
+
+errors:
+  todo: ignore
+  always_use_package_imports: error
+  avoid_print: warning
+  annotate_overrides: warning
+  avoid_renaming_method_parameters: warning
+  avoid_return_types_on_setters: warning
+  avoid_returning_null_for_void: error
+  avoid_unnecessary_containers: warning
+  camel_case_types: error
+  flutter_style_todos: warning
+  invalid_annotation_target: ignore
+  always_declare_return_types: warning
+  unused_import: error
+  require_trailing_commas: info
+  sort_child_properties_last: warning
+  no_leading_underscores_for_local_identifiers: info
+
+linter:
+  rules:
+    always_use_package_imports: true
+    avoid_print: true
+    annotate_overrides: true
+    avoid_renaming_method_parameters: true
+    avoid_return_types_on_setters: true
+    avoid_returning_null_for_void: true
+    avoid_unnecessary_containers: true
+    camel_case_types: true
+    flutter_style_todos: true
+    always_declare_return_types: true
+    require_trailing_commas: true
+    sort_child_properties_last: true
+    library_private_types_in_public_api: false
+    no_leading_underscores_for_local_identifiers: false
+```
+
+##  8. Logger
+pubspec.yaml
+```yaml
+  # https://pub.dev/packages/logging
+  logging: ^1.2.0
+```
+
+lib/common/logger/logger_provider.dart
+```dart
+import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
+
+final loggerProvider = Provider<SetupLogger>((ref) {
+  return SetupLogger();
+});
+
+class SetupLogger {
+
+  SetupLogger () {
+    _init();
+  }
+
+  void _init() {
+    if (kDebugMode) {
+
+      Logger.root.level = Level.ALL;
+      Logger.root.onRecord.listen((record) {
+
+        if (record.level == Level.SEVERE) {
+          debugPrint('${record.level.name}: ${record.time}: ${record.message}: ${record.error}: ${record.stackTrace}');
+        } else if (record.level == Level.INFO) {
+           debugPrint('${record.level.name}: ${record.message}');
+        } else {
+          debugPrint('${record.level.name}: ${record.time}: ${record.message}');
+        }
+      
+      });
+
+    } else {
+      Logger.root.level = Level.OFF;
+    }
+  }
+}
+}
+```
+
+lib/base/base_state.dart
+```dart
+import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
+
+abstract class BaseState<T extends StatefulWidget> extends State<T> {
+ 
+  Logger get log => Logger(T.toString());
+ 
+  @override
+  void initState() {
+    log.info('$T initState');
+    super.initState();
+  }
+
+  void init() {}
+
+  @override
+  void dispose() {
+    log.info('$T dispose');
+    super.dispose();
+  }
+}
+```
+
+lib/base/base_consumer_state.dart
+```dart
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
+
+abstract class BaseConsumer<T extends ConsumerStatefulWidget> extends ConsumerState<T> {
+ 
+  Logger get log => Logger(T.toString());
+ 
+  @override
+  void initState() {
+    log.info('$T initState');
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    log.info('$T dispose');
+    super.dispose();
+  }
+}
+```
+
+lib/main_widget.dart
+```dart
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends BaseState<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: Container());
+  }
+}
+```
