@@ -50,28 +50,26 @@ dev_dependencies:
   # https://pub.dev/packages/flutter_flavorizr
   flutter_flavorizr: ^2.2.1
 
-
 flavorizr:
   ide: "vscode"
   app:
     android:
       flavorDimensions: "flavor"
-
   flavors:
     dev:
       app:
         name: "EcomApp"
 
       android:
-        applicationId: "kyo.desu.ecom_app"
+        applicationId: "kyo.desu.ecomapp.dev"
         generateDummyAssets: true
         # icon: ""
         customConfig:
-          applicationIdSuffix: "\".development\""
-          versionNameSuffix: "\"Dev\""
+          applicationIdSuffix: '".development"'
+          versionNameSuffix: '"Dev"'
           signingConfig: signingConfigs.dev
       ios:
-        bundleId: "kyo.desu.ecom_app.dev"
+        bundleId: "kyo.desu.ecomapp.dev"
         generateDummyAssets: true
         # icon: ""
         buildSettings:
@@ -81,15 +79,15 @@ flavorizr:
         name: "EcomApp"
 
       android:
-        applicationId: "kyo.desu.ecom_app"
+        applicationId: "kyo.desu.ecomapp.qa"
         generateDummyAssets: true
         # icon: ""
         customConfig:
-          applicationIdSuffix: "\".qa\""
-          versionNameSuffix: "\"QA\""
+          applicationIdSuffix: '".qa"'
+          versionNameSuffix: '"QA"'
           signingConfig: signingConfigs.qa
       ios:
-        bundleId: "kyo.desu.ecom_app.qa"
+        bundleId: "kyo.desu.ecomapp.qa"
         generateDummyAssets: true
         # icon: ""
         buildSettings:
@@ -99,15 +97,15 @@ flavorizr:
         name: "EcomApp"
 
       android:
-        applicationId: "kyo.desu.ecom_app"
+        applicationId: "kyo.desu.ecomapp.uat"
         generateDummyAssets: true
         # icon: ""
         customConfig:
-          applicationIdSuffix: "\".uat\""
-          versionNameSuffix: "\"UAT\""
+          applicationIdSuffix: '".uat"'
+          versionNameSuffix: '"UAT"'
           signingConfig: signingConfigs.uat
       ios:
-        bundleId: "kyo.desu.ecom_app.uat"
+        bundleId: "kyo.desu.ecomapp.uat"
         generateDummyAssets: true
         # icon: ""
         buildSettings:
@@ -117,16 +115,17 @@ flavorizr:
         name: "EcomApp"
 
       android:
-        applicationId: "kyo.desu.ecom_app"
+        applicationId: "kyo.desu.ecomapp"
         generateDummyAssets: true
         # icon: ""
         customConfig:
           signingConfig: signingConfigs.prod
       ios:
-        bundleId: "kyo.desu.ecom_app"
+        bundleId: "kyo.desu.ecomapp"
         generateDummyAssets: true
         # icon: ""
         buildSettings:
+
 ```
 
 Command
