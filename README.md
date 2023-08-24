@@ -460,5 +460,9 @@ gsheets:
   worksheet: シート1
 ```
 
+```
+fts run
+```
+
 3. Follow the Configuration guide    
 https://github.com/roipeker/flutter_translation_sheet/wiki/Configuration-setup
