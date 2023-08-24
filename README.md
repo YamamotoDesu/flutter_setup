@@ -416,5 +416,9 @@ FutureOr<void> mainApp(Flavor flavor) async {
 ## 10. Flutter Transiton Sheet
 
 ```yaml
+dependencies:
+  flutter:
+    sdk: flutter
 
+  flutter_translation_sheet: ^1.0.26
 ```
