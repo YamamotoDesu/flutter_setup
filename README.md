@@ -424,6 +424,14 @@ dependencies:
     sdk: flutter
 
   flutter_translation_sheet: ^1.0.26
+  intl: ^0.17.0
+
+flutter:
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+  generate: true
 ```
 
 Enable flutter translation sheet
@@ -462,6 +470,25 @@ gsheets:
 
 ```
 fts run
+```
+
+l10n.yaml
+```yaml
+arb-dir: lib/l10n
+template-arb-file: app_ja.arb
+output-localization-file: app_localizations.dart
+```
+
+```
+fts extract -s -p lib/ -o strings/strings.yaml
+```
+
+strings/strings.yaml
+```yaml
+homeTitle: Flutter Demo Home Page
+buttonPushMsg: "You have pushed the button {{counter}} times:"
+increment: Increment
+home: Home
 ```
 
 3. Follow the Configuration guide    
