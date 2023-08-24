@@ -570,3 +570,14 @@ class MainWidget extends StatelessWidget {
 flutter clean
 fvm flutter pub get
 ```
+
+lib/base/base_consumer_state.dart
+lib/base/base_state.dart
+```
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+abstract class BaseConsumer<T extends ConsumerStatefulWidget>
+    extends ConsumerState<T> {
+  AppLocalizations get translation => AppLocalizations.of(context)!;
+  Logger get log => Logger(T.toString());
+```
