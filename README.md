@@ -440,8 +440,8 @@ Export PATH="$PATH:/$HOME/.pub-cache/bin"
 1. See how to get your Google credentials to connect fts with Google Sheets.
 https://github.com/roipeker/flutter_translation_sheet/wiki/Google-credentials
 
-2. Check how to Install fts on your system
+2. Check how to Install fts on your system    
 https://github.com/roipeker/flutter_translation_sheet/wiki/Installation
 
-3. Follow the Configuration guide
+3. Follow the Configuration guide    
 https://github.com/roipeker/flutter_translation_sheet/wiki/Configuration-setup
