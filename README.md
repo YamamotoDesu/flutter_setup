@@ -422,9 +422,11 @@ pubspec.yaml
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   flutter_translation_sheet: ^1.0.26
-  intl: ^0.17.0
+  intl:
 
 flutter:
   # The following line ensures that the Material Icons font is
@@ -495,8 +497,8 @@ home: Home
 ```
 
 trconfig.yaml
-```
-output_arb_template: lib/l18n/app_*.arb
+```yaml
+output_arb_template: lib/l10n/app_*.arb
 entry_file: strings/strings.yaml
 
   ## Translation Key class and filename reference
@@ -525,6 +527,10 @@ dart:
   ## translations as Dart files Maps (practical for hot-reload)
   use_maps: false
 
+dependency_overrides:
+  collection: ^1.17.2
+  intl: ^0.18.0
+
 ```
 
 ```
@@ -533,3 +539,35 @@ fts run
 
 3. Follow the Configuration guide    
 https://github.com/roipeker/flutter_translation_sheet/wiki/Configuration-setup
+
+lib/main_widget.dart
+```dart
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+/// auto generated after you run `flutter pub get`
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_setup/i18n/translations.dart';
+
+
+class MainWidget extends StatelessWidget {
+  const MainWidget({Key? key}) : super(key: key);
+
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const HomePage(),
+      supportedLocales: AppLocales.supportedLocales,
+      locale: AppLocales.ja.locale,
+      localizationsDelegates: const [
+        AppLocalizations.delegate, // Add this line
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+```
+
+```
+flutter clean
+fvm flutter pub get
+```
