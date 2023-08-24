@@ -417,10 +417,22 @@ FutureOr<void> mainApp(Flavor flavor) async {
 How to set up    
 https://github.com/roipeker/flutter_translation_sheet/wiki
 
+pubspec.yaml
 ```yaml
 dependencies:
   flutter:
     sdk: flutter
 
   flutter_translation_sheet: ^1.0.26
+```
+
+Enable flutter translation sheet
+```
+flutter pub global activate flutter_translation_sheet
+```
+
+.zshrc
+```
+Export PATH="$PATH:/$HOME/Development/flutter/.pub-cache/bin"
+Export PATH="$PATH:/$HOME/.pub-cache/bin"
 ```
