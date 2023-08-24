@@ -460,5 +460,5 @@ gsheets:
   worksheet: シート1
 ```
 
-4. Follow the Configuration guide    
+3. Follow the Configuration guide    
 https://github.com/roipeker/flutter_translation_sheet/wiki/Configuration-setup
