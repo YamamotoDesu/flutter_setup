@@ -546,8 +546,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 /// auto generated after you run `flutter pub get`
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_setup/i18n/translations.dart';
-
+import 'package:flutter_setup/i18n/i18n.dart';
 
 class MainWidget extends StatelessWidget {
   const MainWidget({Key? key}) : super(key: key);
