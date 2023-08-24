@@ -472,6 +472,9 @@ gsheets:
 fts run
 ```
 
+Delete all files in the l18n folder.
+
+
 l10n.yaml
 ```yaml
 arb-dir: lib/l10n
@@ -498,6 +501,34 @@ entry_file: strings/strings.yaml
 
   ## Translation Key class and filename reference
   # keys_id: Strings
+
+param_output_pattern: "{*}"
+
+## Writes the locales for Android resources `resConfig()` in app/build.gradle
+## And keeps locales_config.xml updated (for Android 33+)
+#output_android_locales: true
+
+dart:
+  ## Output dir for dart files
+  output_dir: lib/i18n
+
+  output_fts_utils: true
+
+  #fts_utils_args_pattern: {}
+
+  ## Translation Key class and filename reference
+  # keys_id: Strings
+
+  ## Translations map class an filename reference.
+  translations_id: TData
+
+  ## translations as Dart files Maps (practical for hot-reload)
+  use_maps: false
+
+```
+
+```
+fts run
 ```
 
 3. Follow the Configuration guide    
