@@ -369,8 +369,19 @@ class _HomePageState extends BaseState<HomePage> {
 
 ## 9. keytool
 ```yaml
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
   # https://pub.dev/packages/flutter_dotenv
   flutter_dotenv: ^5.1.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .dev.env
+    - .qa.env
+    - .uat.env
+    - .prod.env
 ```
 
 .dev.env
