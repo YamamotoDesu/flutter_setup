@@ -491,5 +491,14 @@ increment: Increment
 home: Home
 ```
 
+trconfig.yaml
+```
+output_arb_template: lib/l18n/app_*.arb
+entry_file: strings/strings.yaml
+
+  ## Translation Key class and filename reference
+  # keys_id: Strings
+```
+
 3. Follow the Configuration guide    
 https://github.com/roipeker/flutter_translation_sheet/wiki/Configuration-setup
