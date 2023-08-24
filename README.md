@@ -443,5 +443,22 @@ https://github.com/roipeker/flutter_translation_sheet/wiki/Google-credentials
 2. Check how to Install fts on your system    
 https://github.com/roipeker/flutter_translation_sheet/wiki/Installation
 
-3. Follow the Configuration guide    
+```
+fts run
+```
+
+trconfig.yaml
+```yaml
+gsheets:
+  credentials_path: credentials.json
+
+  ## Open your google sheet and copy the SHEET_ID from the url:
+  ## https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit#gid=0
+  spreadsheet_id: 1rU-ovy3_PLFHF_gl.....
+
+  ## The spreadsheet "table" where your translation will live.
+  worksheet: シート1
+```
+
+4. Follow the Configuration guide    
 https://github.com/roipeker/flutter_translation_sheet/wiki/Configuration-setup
