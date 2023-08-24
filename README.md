@@ -414,7 +414,7 @@ FutureOr<void> mainApp(Flavor flavor) async {
 ```
 
 ## 10. Flutter Transiton Sheet
-How to set up
+How to set up    
 https://github.com/roipeker/flutter_translation_sheet/wiki
 
 ```yaml
