@@ -366,3 +366,44 @@ class _HomePageState extends BaseState<HomePage> {
   }
 }
 ```
+
+## 9.
+```yaml
+  # https://pub.dev/packages/flutter_dotenv
+  flutter_dotenv: ^5.1.0
+```
+
+.dev.env
+```env
+BASE_URL=api.dev.yamamoto.desu
+API_KEY=1234567
+```
+
+lib/core/env/env_reader.dart
+```dart
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_setup/core/flavor/flavor.dart';
+
+final envReaderProvider = Provider<EnvReader>((ref) {
+  return EnvReader();
+});
+
+class EnvReader {
+  String getEnvFileName(Flavor flavor) {
+    return ".${flavor.name}.env";
+  }
+}
+```
+
+lib/main.dart
+```dart
+FutureOr<void> mainApp(Flavor flavor) async {
+  final envFile = envReader.getEnvFileName(flavor);
+  await dotenv.load(fileName: envFile);
+```
+
+## 10. Flutter Transiton Sheet
+
+```yaml
+
+```
