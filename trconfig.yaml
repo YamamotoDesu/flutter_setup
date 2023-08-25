@@ -1,0 +1,68 @@
+## output dir for json translations by locale
+## (*) represents the locale
+#output_json_template: assets/i18n/*.json
+
+## output dir for arb translations files by locale
+## Useful if you have intl setup or "Intl plugin" in your IDE.
+## (*) represents the locale
+output_arb_template: lib/l10n/app_*.arb
+
+## main entry file to generate the unique translation json.
+entry_file: strings/strings.yaml
+
+## pattern to applies final variables in the generated json/dart Strings.
+## Enclose * in the pattern you need.
+## {*} = {{name}} becomes {name}
+## %* = {{name}} becomes %name
+## (*) = {{name}} becomes (name)
+## - Special case when you need * as prefix or suffix, use *? as splitter
+## ***?** = {{name}} becomes **name**
+param_output_pattern: "{*}"
+
+## Writes the locales for Android resources `resConfig()` in app/build.gradle
+## And keeps locales_config.xml updated (for Android 33+)
+#output_android_locales: true
+
+dart:
+  ## Output dir for dart files
+  output_dir: lib/i18n
+
+  output_fts_utils: true
+
+  #fts_utils_args_pattern: {}
+
+  ## Translation Key class and filename reference
+  # keys_id: Strings
+
+  ## Translations map class an filename reference.
+  translations_id: TData
+
+  ## translations as Dart files Maps (practical for hot-reload)
+  use_maps: false
+
+## see: https://cloud.google.com/translate/docs/languages
+## Watch out for the language codes, they are not the same as the locale codes.
+## Follows the ISO-639 standard.
+## List of languages to translate your strings.
+locales:
+  - en
+  - es
+  - ja
+
+## Google Sheets Configuration
+## How to get your credentials?
+## see: https://github.com/roipeker/flutter_translation_sheet/wiki/Google-credentials
+gsheets:
+  ## Use relative or absolute path to your json credentials.
+  ## Check the wiki for a step by step tutorial:
+  ## https://github.com/roipeker/flutter_translation_sheet/wiki/Google-credentials
+  ## Or you can set the var FTS_CREDENTIALS=path/credentials.json in your OS System
+  ## Enviroment.
+  credentials_path: credentials.json
+
+  ## Open your google sheet and copy the SHEET_ID from the url:
+  ## https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit#gid=0
+  spreadsheet_id: 1rU-ovy3_PLFHF_glzpb4Hmx3StlGkAVC7DCO64OBtvw
+
+  ## The spreadsheet "table" where your translation will live.
+  worksheet: シート1

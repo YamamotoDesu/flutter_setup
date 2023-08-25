@@ -1,0 +1,14 @@
+{
+    "@@last_modified": "2023-08-25T08:43:31.313260",
+    "@@locale": "es",
+    "homeTitle": "Página de inicio de Flutter Demo",
+    "buttonPushMsg": "Ha presionado el botón {counter} tiempos:",
+    "@buttonPushMsg": {
+        "description": "Auto-generated for buttonPushMsg",
+        "placeholders": {
+            "counter": {}
+        }
+    },
+    "increment": "Incremento",
+    "home": "Hogar"
+}

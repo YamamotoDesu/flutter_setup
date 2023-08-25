@@ -1,0 +1,57 @@
+core:
+  env:
+    env_reader:
+      text1: ".{{env}}"
+common:
+  logger:
+    logger_provider:
+      text1: "{{name:}} {{time:}} {{message:}} {{error:}} {{stackTrace}}"
+      text2: "{{name:}} {{message}}"
+      text3: "{{name:}} {{time:}} {{message}}"
+flavors:
+  text1: EcomApp
+  text2: EcomApp
+  text3: EcomApp
+  text4: EcomApp
+  text5: title
+i18n:
+  utils:
+    text1: ar
+    text2: fa
+    text3: he
+    text4: ps
+    text5: ur
+    text6: "Full locale \"{{value\"}} not found. But a matching language \"{{langLocale\"}} was found. Using it"
+    text7: "No supported locale found for \"{{value\"}}"
+    text8: "@:(\S+)"
+    text9: "Fts, linked key not found: {{findKey}}"
+    text10: "{{{key}}"
+    text11: "{{{key}}"
+    text12: "%s"
+  t_data:
+    text1: "No master map found for locale: {{key}}"
+    text2: English
+    text3: English
+    text4: en
+    text5: en
+    text6: Español
+    text7: Spanish
+    text8: es
+    text9: es
+    text10: 日本語
+    text11: Japanese
+    text12: ja
+    text13: ja
+    text14: "LangVo {nativeName: \"{{nativeName\",}} englishName: \"{{englishName\",}} locale: {{locale,}} emoji: this.flagChar}"
+    text15: Select language
+    text16: Choose language
+pages:
+  my_home_page:
+    text1: "Hello {{title}}"
+base:
+  base_state:
+    text1: "{{t}} initState"
+    text2: "{{t}} dispose"
+  base_consumer_state:
+    text1: "{{t}} initState"
+    text2: "{{t}} dispose"

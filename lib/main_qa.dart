@@ -1,8 +1,6 @@
-import 'flavors.dart';
-
-import 'main.dart' as runner;
+import 'package:flutter_setup/main.dart';
+import 'package:flutter_setup/core/flavor/flavor.dart';
 
 Future<void> main() async {
-  F.appFlavor = Flavor.qa;
-  await runner.main();
+  mainApp(Flavor.qa);
 }

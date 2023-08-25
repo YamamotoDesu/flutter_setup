@@ -1,0 +1,14 @@
+{
+    "@@last_modified": "2023-08-25T08:43:31.360389",
+    "@@locale": "ja",
+    "homeTitle": "フラッターデモのホームページ",
+    "buttonPushMsg": "あなたはボタンを押しました{counter}を回しました：",
+    "@buttonPushMsg": {
+        "description": "Auto-generated for buttonPushMsg",
+        "placeholders": {
+            "counter": {}
+        }
+    },
+    "increment": "インクリメント",
+    "home": "家"
+}
