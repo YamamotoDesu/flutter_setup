@@ -647,3 +647,13 @@ class InternetConnectionObserver {
   }
 }
 ```
+
+lib/main.dart
+```dart
+FutureOr<void> mainApp(Flavor flavor) async {
+  // An object that stores the state of the providers and allows overriding the behavior of a specific provider.
+  final container = ProviderContainer();
+
+  // Observer Internet Connection
+  container.read(internetConnectionObserverProvider);
+```
