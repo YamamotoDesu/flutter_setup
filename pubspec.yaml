@@ -42,6 +42,8 @@ dependencies:
   logging: ^1.2.0
   flutter_dotenv: ^5.1.0
   intl: ^0.18.0
+  connectivity_plus: ^4.0.2
+  internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:
@@ -125,7 +127,7 @@ flavorizr:
         customConfig:
           applicationIdSuffix: '".development"'
           versionNameSuffix: '"Dev"'
-          signingConfig: signingConfigs.dev
+          # signingConfig: signingConfigs.dev
       ios:
         bundleId: "kyo.desu.ecomapp.dev"
         generateDummyAssets: true
@@ -143,7 +145,7 @@ flavorizr:
         customConfig:
           applicationIdSuffix: '".qa"'
           versionNameSuffix: '"QA"'
-          signingConfig: signingConfigs.qa
+          # signingConfig: signingConfigs.qa
       ios:
         bundleId: "kyo.desu.ecomapp.qa"
         generateDummyAssets: true
@@ -161,7 +163,7 @@ flavorizr:
         customConfig:
           applicationIdSuffix: '".uat"'
           versionNameSuffix: '"UAT"'
-          signingConfig: signingConfigs.uat
+          # signingConfig: signingConfigs.uat
       ios:
         bundleId: "kyo.desu.ecomapp.uat"
         generateDummyAssets: true
@@ -177,7 +179,7 @@ flavorizr:
         generateDummyAssets: true
         # icon: ""
         customConfig:
-          signingConfig: signingConfigs.prod
+          # signingConfig: signingConfigs.prod
       ios:
         bundleId: "kyo.desu.ecomapp"
         generateDummyAssets: true

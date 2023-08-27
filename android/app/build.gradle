@@ -36,7 +36,7 @@ android {
             applicationId "kyo.desu.ecomapp.dev"
             applicationIdSuffix ".development"
             versionNameSuffix "Dev"
-            signingConfig signingConfigs.dev
+            // signingConfig signingConfigs.dev
             resValue "string", "app_name", "EcomApp"
         }
         qa {
@@ -44,7 +44,7 @@ android {
             applicationId "kyo.desu.ecomapp.qa"
             applicationIdSuffix ".qa"
             versionNameSuffix "QA"
-            signingConfig signingConfigs.qa
+            // signingConfig signingConfigs.qa
             resValue "string", "app_name", "EcomApp"
         }
         uat {
@@ -52,13 +52,13 @@ android {
             applicationId "kyo.desu.ecomapp.uat"
             applicationIdSuffix ".uat"
             versionNameSuffix "UAT"
-            signingConfig signingConfigs.uat
+            // signingConfig signingConfigs.uat
             resValue "string", "app_name", "EcomApp"
         }
         prod {
             dimension "flavor"
             applicationId "kyo.desu.ecomapp"
-            signingConfig signingConfigs.prod
+            // signingConfig signingConfigs.prod
             resValue "string", "app_name", "EcomApp"
         }
     }
@@ -88,7 +88,7 @@ android {
         applicationId "com.example.flutter_setup"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 30
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -98,7 +98,7 @@ android {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            // signingConfig signingConfigs.debug
         }
     }
 }

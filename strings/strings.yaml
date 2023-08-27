@@ -21,9 +21,9 @@ i18n:
     text3: he
     text4: ps
     text5: ur
-    text6: "Full locale \"{{value\"}} not found. But a matching language \"{{langLocale\"}} was found. Using it"
-    text7: "No supported locale found for \"{{value\"}}"
-    text8: "@:(\S+)"
+    text6: 'Full locale "{{value"}} not found. But a matching language "{{langLocale"}} was found. Using it'
+    text7: 'No supported locale found for "{{value"}}'
+    text8: "@:(S+)"
     text9: "Fts, linked key not found: {{findKey}}"
     text10: "{{{key}}"
     text11: "{{{key}}"
@@ -42,7 +42,7 @@ i18n:
     text11: Japanese
     text12: ja
     text13: ja
-    text14: "LangVo {nativeName: \"{{nativeName\",}} englishName: \"{{englishName\",}} locale: {{locale,}} emoji: this.flagChar}"
+    text14: 'LangVo {nativeName: "{{nativeName",}} englishName: "{{englishName",}} locale: {{locale,}} emoji: this.flagChar}'
     text15: Select language
     text16: Choose language
 pages:
