@@ -651,9 +651,68 @@ class InternetConnectionObserver {
 lib/main.dart
 ```dart
 FutureOr<void> mainApp(Flavor flavor) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   // An object that stores the state of the providers and allows overriding the behavior of a specific provider.
   final container = ProviderContainer();
 
   // Observer Internet Connection
   container.read(internetConnectionObserverProvider);
+
+  runApp(
+    UncontrolledProviderScope(
+```
+
+
+lib/main_widget.dart
+```dart
+class _MainWidgetState extends ConsumerState<MainWidget> {
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  @override
+  void initState() {
+    super.initState();
+    _isNetworkConnected();
+    _networkConnectionObserver();
+  }
+
+  void _isNetworkConnected() async {
+    final isConnected =
+        await ref.read(internetConnectionObserverProvider).isNetworkConnected();
+    if (!isConnected && mounted) {
+      navigatorKey.currentState?.push(
+        MaterialPageRoute(
+          builder: (_) => const NoInternetConnectionScreen(),
+        ),
+      );
+    }
+  }
+
+  void _networkConnectionObserver() {
+    final connectionStream =
+        ref.read(internetConnectionObserverProvider).hasConnectionStream.stream;
+    connectionStream.listen((isConnected) {
+      if (!isConnected && mounted) {
+        _showSnackbar();
+      }
+    });
+  }
+
+  void _showSnackbar() {
+    scaffoldMessengerKey.currentState?.clearSnackBars();
+    scaffoldMessengerKey.currentState?.showSnackBar(
+      const SnackBar(
+        content: Text("No internet connection"),
+        duration: Duration(seconds: 3),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      navigatorKey: navigatorKey,
+      scaffoldMessengerKey: scaffoldMessengerKey,
 ```
