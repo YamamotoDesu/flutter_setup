@@ -716,3 +716,6 @@ class _MainWidgetState extends ConsumerState<MainWidget> {
       navigatorKey: navigatorKey,
       scaffoldMessengerKey: scaffoldMessengerKey,
 ```
+
+[internetconnection.webm](https://github.com/YamamotoDesu/flutter_setup/assets/47273077/803e7a42-48c7-4a1e-9226-f864950299d7)
+
