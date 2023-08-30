@@ -719,3 +719,17 @@ class _MainWidgetState extends ConsumerState<MainWidget> {
 
 [internetconnection.webm](https://github.com/YamamotoDesu/flutter_setup/assets/47273077/803e7a42-48c7-4a1e-9226-f864950299d7)
 
+## 12. App Updater
+
+```yaml
+  upgrader: ^6.5.0
+```
+
+```dart
+        upgrader: Upgrader(
+          shouldPopScope: () => true,
+          canDismissDialog: true,
+          durationUntilAlertAgain: const Duration(days: 1),
+          dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material,
+        ),
+```
