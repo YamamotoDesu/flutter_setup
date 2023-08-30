@@ -33,32 +33,28 @@ android {
     productFlavors {
         dev {
             dimension "flavor"
-            applicationId "kyo.desu.ecomapp.dev"
+            applicationId "kyo.desu.ecomapp"
             applicationIdSuffix ".development"
             versionNameSuffix "Dev"
-            // signingConfig signingConfigs.dev
             resValue "string", "app_name", "EcomApp"
         }
         qa {
             dimension "flavor"
-            applicationId "kyo.desu.ecomapp.qa"
+            applicationId "kyo.desu.ecomapp"
             applicationIdSuffix ".qa"
             versionNameSuffix "QA"
-            // signingConfig signingConfigs.qa
             resValue "string", "app_name", "EcomApp"
         }
         uat {
             dimension "flavor"
-            applicationId "kyo.desu.ecomapp.uat"
+            applicationId "kyo.desu.ecomapp"
             applicationIdSuffix ".uat"
             versionNameSuffix "UAT"
-            // signingConfig signingConfigs.uat
             resValue "string", "app_name", "EcomApp"
         }
         prod {
             dimension "flavor"
             applicationId "kyo.desu.ecomapp"
-            // signingConfig signingConfigs.prod
             resValue "string", "app_name", "EcomApp"
         }
     }

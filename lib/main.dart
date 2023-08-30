@@ -7,7 +7,8 @@ import 'package:flutter_setup/core/env/env_reader.dart';
 import 'package:flutter_setup/core/providers/internet_connection_observer.dart';
 import 'package:flutter_setup/main_widget.dart';
 
-FutureOr<void> mainApp(Flavor flavor) async {
+Future<void> main() async {
+// FutureOr<void> mainApp(Flavor flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // An object that stores the state of the providers and allows overriding the behavior of a specific provider.
@@ -16,9 +17,9 @@ FutureOr<void> mainApp(Flavor flavor) async {
   // Observer Internet Connection
   container.read(internetConnectionObserverProvider);
 
-  final envReader = container.read(envReaderProvider);
-  final envFile = envReader.getEnvFileName(flavor);
-  await dotenv.load(fileName: envFile);
+  // final envReader = container.read(envReaderProvider);
+  // final envFile = envReader.getEnvFileName(flavor);
+  // await dotenv.load(fileName: envFile);
 
   runApp(
     UncontrolledProviderScope(

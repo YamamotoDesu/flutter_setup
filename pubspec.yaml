@@ -44,6 +44,7 @@ dependencies:
   intl: ^0.18.0
   connectivity_plus: ^4.0.2
   internet_connection_checker: ^1.0.0+1
+  upgrader: ^6.5.0
 
 dev_dependencies:
   flutter_test:
@@ -110,78 +111,78 @@ dependency_overrides:
   dart_console2: ^2.0.0
   intl: ^0.17.0
 
-flavorizr:
-  ide: "vscode"
-  app:
-    android:
-      flavorDimensions: "flavor"
-  flavors:
-    dev:
-      app:
-        name: "EcomApp"
+# flavorizr:
+#   ide: "vscode"
+#   app:
+#     android:
+#       flavorDimensions: "flavor"
+#   flavors:
+#     dev:
+#       app:
+#         name: "EcomApp"
 
-      android:
-        applicationId: "kyo.desu.ecomapp.dev"
-        generateDummyAssets: true
-        # icon: ""
-        customConfig:
-          applicationIdSuffix: '".development"'
-          versionNameSuffix: '"Dev"'
-          # signingConfig: signingConfigs.dev
-      ios:
-        bundleId: "kyo.desu.ecomapp.dev"
-        generateDummyAssets: true
-        # icon: ""
-        buildSettings:
+#       android:
+#         applicationId: "kyo.desu.ecomapp"
+#         generateDummyAssets: true
+#         # icon: ""
+#         customConfig:
+#           applicationIdSuffix: "\".development\""
+#           versionNameSuffix: "\"Dev\"" # Don't forget to escape strings with \"
+#           # signingConfig: signingConfigs.dev
+#       ios:
+#         bundleId: "kyo.desu.ecomapp.dev"
+#         generateDummyAssets: true
+#         # icon: ""
+#         buildSettings:
 
-    qa:
-      app:
-        name: "EcomApp"
+#     qa:
+#       app:
+#         name: "EcomApp"
 
-      android:
-        applicationId: "kyo.desu.ecomapp.qa"
-        generateDummyAssets: true
-        # icon: ""
-        customConfig:
-          applicationIdSuffix: '".qa"'
-          versionNameSuffix: '"QA"'
-          # signingConfig: signingConfigs.qa
-      ios:
-        bundleId: "kyo.desu.ecomapp.qa"
-        generateDummyAssets: true
-        # icon: ""
-        buildSettings:
+#       android:
+#         applicationId: "kyo.desu.ecomapp"
+#         generateDummyAssets: true
+#         # icon: ""
+#         customConfig:
+#           applicationIdSuffix: "\".qa\""
+#           versionNameSuffix: "\"QA\"" # Don't forget to escape strings with \"
+#           # signingConfig: signingConfigs.qa
+#       ios:
+#         bundleId: "kyo.desu.ecomapp.qa"
+#         generateDummyAssets: true
+#         # icon: ""
+#         buildSettings:
 
-    uat:
-      app:
-        name: "EcomApp"
+#     uat:
+#       app:
+#         name: "EcomApp"
 
-      android:
-        applicationId: "kyo.desu.ecomapp.uat"
-        generateDummyAssets: true
-        # icon: ""
-        customConfig:
-          applicationIdSuffix: '".uat"'
-          versionNameSuffix: '"UAT"'
-          # signingConfig: signingConfigs.uat
-      ios:
-        bundleId: "kyo.desu.ecomapp.uat"
-        generateDummyAssets: true
-        # icon: ""
-        buildSettings:
+#       android:
+#         applicationId: "kyo.desu.ecomapp"
+#         generateDummyAssets: true
+#         # icon: ""
+#         customConfig:
+#           applicationIdSuffix: "\".uat\""
+#           versionNameSuffix: "\"UAT\"" # Don't forget to escape strings with \"
+#           # signingConfig: signingConfigs.uat
+#       ios: 
+#         bundleId: "kyo.desu.ecomapp.uat"
+#         generateDummyAssets: true
+#         # icon: ""
+#         buildSettings:
 
-    prod:
-      app:
-        name: "EcomApp"
+#     prod:
+#       app:
+#         name: "EcomApp"
 
-      android:
-        applicationId: "kyo.desu.ecomapp"
-        generateDummyAssets: true
-        # icon: ""
-        customConfig:
-          # signingConfig: signingConfigs.prod
-      ios:
-        bundleId: "kyo.desu.ecomapp"
-        generateDummyAssets: true
-        # icon: ""
-        buildSettings:
+#       android:
+#         applicationId: "kyo.desu.ecomapp"
+#         generateDummyAssets: true
+#         # icon: ""
+#         # customConfig:
+#         # signingConfig: signingConfigs.prod
+#       ios:
+#         bundleId: "kyo.desu.ecomapp"
+#         generateDummyAssets: true
+#         # icon: ""
+#         buildSettings:
