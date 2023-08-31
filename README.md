@@ -733,3 +733,10 @@ class _MainWidgetState extends ConsumerState<MainWidget> {
           dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material,
         ),
 ```
+
+## 13. Configure Dio Http Client
+
+pubspec.yaml
+```yaml
+  dio: ^5.3.2
+```
