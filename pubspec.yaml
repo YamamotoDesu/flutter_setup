@@ -38,13 +38,15 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_riverpod: ^2.3.7
   flutter_translation_sheet: ^1.0.26
-  logger: ^2.0.1
+  logger: ^1.4.0
   logging: ^1.2.0
   flutter_dotenv: ^5.1.0
   intl: ^0.18.0
   connectivity_plus: ^4.0.2
   internet_connection_checker: ^1.0.0+1
   upgrader: ^6.5.0
+  dio: ^5.3.2
+  dio_http_formatter: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -110,7 +112,6 @@ dependency_overrides:
   dcli: ^1.35.2
   dart_console2: ^2.0.0
   intl: ^0.17.0
-
 # flavorizr:
 #   ide: "vscode"
 #   app:
@@ -165,7 +166,7 @@ dependency_overrides:
 #           applicationIdSuffix: "\".uat\""
 #           versionNameSuffix: "\"UAT\"" # Don't forget to escape strings with \"
 #           # signingConfig: signingConfigs.uat
-#       ios: 
+#       ios:
 #         bundleId: "kyo.desu.ecomapp.uat"
 #         generateDummyAssets: true
 #         # icon: ""
