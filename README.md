@@ -739,4 +739,5 @@ class _MainWidgetState extends ConsumerState<MainWidget> {
 pubspec.yaml
 ```yaml
   dio: ^5.3.2
+  dio_http_formatter: ^3.1.0
 ```
