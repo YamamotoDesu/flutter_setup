@@ -786,3 +786,5 @@ class NetworkServiceInterceptor extends Interceptor {
 }
 ```
 
+## 14. Obscure Sensitive UI
+
