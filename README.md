@@ -788,3 +788,66 @@ class NetworkServiceInterceptor extends Interceptor {
 
 ## 14. Obscure Sensitive UI
 <img width="300" alt="image" src="https://github.com/YamamotoDesu/flutter_setup/assets/47273077/49600125-bcca-4b59-ba2a-251a8c31bf6f">
+
+lib/core/providers/app_background_state_provider.dart
+```dart
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final appBackgroundStateProvider = StateProvider<bool>((ref) {
+  return false;
+});
+```
+
+lib/base/base_consumer_state.dart
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+abstract class BaseConsumerState<T extends ConsumerStatefulWidget>
+    extends ConsumerState<T> with WidgetsBindingObserver { //added
+  AppLocalizations get translation => AppLocalizations.of(context)!;
+  Logger get log => Logger(T.toString());
+
+  @override
+  void initState() {
+    log.info('$T initState');
+    super.initState();
+    WidgetsBinding.instance.addObserver(this); //added
+  }
+
+  @override
+  void dispose() {
+    log.info('$T dispose');
+    WidgetsBinding.instance.removeObserver(this); //added
+    super.dispose();
+  }
+}
+```
+
+
+```dart
+class _MainWidgetState extends BaseConsumerState<MainWidget> {
+// ------------中略---------
+
+      home: isAppInBackground
+          ? const ColoredBox(color: Colors.black)
+          : const HomePage(),
+    );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    switch (state) {
+      case AppLifecycleState.inactive:
+        ref.read(appBackgroundStateProvider.notifier).state = true;
+      case AppLifecycleState.resumed:
+        ref.read(appBackgroundStateProvider.notifier).state = false;
+      default:
+    }
+  }
+}
+```
