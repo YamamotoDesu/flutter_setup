@@ -332,7 +332,7 @@ lib/base/base_consumer_state.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 
-abstract class BaseConsumer<T extends ConsumerStatefulWidget> extends ConsumerState<T> {
+abstract class BaseConsumerState<T extends ConsumerStatefulWidget> extends ConsumerState<T> {
  
   Logger get log => Logger(T.toString());
  
@@ -576,7 +576,7 @@ lib/base/base_state.dart
 ```dart
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-abstract class BaseConsumer<T extends ConsumerStatefulWidget>
+abstract class BaseConsumerState<T extends ConsumerStatefulWidget>
     extends ConsumerState<T> {
   AppLocalizations get translation => AppLocalizations.of(context)!;
   Logger get log => Logger(T.toString());
@@ -787,4 +787,4 @@ class NetworkServiceInterceptor extends Interceptor {
 ```
 
 ## 14. Obscure Sensitive UI
-
+<img width="300" alt="image" src="https://github.com/YamamotoDesu/flutter_setup/assets/47273077/49600125-bcca-4b59-ba2a-251a8c31bf6f">
