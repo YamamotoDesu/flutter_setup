@@ -2,13 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_setup/base/base_consumer_state.dart';
 
-import 'package:flutter_setup/base/base_state.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 /// auto generated after you run `flutter pub get`
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_setup/common/error/no_internet_connection_screen.dart';
+import 'package:flutter_setup/core/providers/app_background_state_provider.dart';
 import 'package:flutter_setup/core/providers/internet_connection_observer.dart';
 
 import 'package:flutter_setup/i18n/i18n.dart';
@@ -21,7 +22,7 @@ class MainWidget extends ConsumerStatefulWidget {
   ConsumerState<MainWidget> createState() => _MainWidgetState();
 }
 
-class _MainWidgetState extends ConsumerState<MainWidget> {
+class _MainWidgetState extends BaseConsumerState<MainWidget> {
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -67,6 +68,7 @@ class _MainWidgetState extends ConsumerState<MainWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final isAppInBackground = ref.watch(appBackgroundStateProvider);
     return MaterialApp(
       navigatorKey: navigatorKey,
       scaffoldMessengerKey: scaffoldMessengerKey,
@@ -81,19 +83,34 @@ class _MainWidgetState extends ConsumerState<MainWidget> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: const HomePage(),
+      home: isAppInBackground
+          ? const ColoredBox(color: Colors.black)
+          : const HomePage(),
     );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    switch (state) {
+      case AppLifecycleState.inactive:
+        ref.read(appBackgroundStateProvider.notifier).state = true;
+      case AppLifecycleState.resumed:
+        ref.read(appBackgroundStateProvider.notifier).state = false;
+      default:
+    }
   }
 }
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  BaseConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends BaseState<HomePage> {
+class _HomePageState extends BaseConsumerState<HomePage> {
   int _counter = 0;
 
   void _incrementCounter() {

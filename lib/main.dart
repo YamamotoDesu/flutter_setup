@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_setup/core/flavor/flavor.dart';
-import 'package:flutter_setup/core/env/env_reader.dart';
+// import 'package:flutter_setup/core/flavor/flavor.dart';
+// import 'package:flutter_setup/core/env/env_reader.dart';
 import 'package:flutter_setup/core/providers/internet_connection_observer.dart';
 import 'package:flutter_setup/main_widget.dart';
 
