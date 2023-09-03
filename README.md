@@ -851,3 +851,77 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
   }
 }
 ```
+
+## 15. Flutter Secure Storage
+
+pubspec.yaml
+```yaml
+  flutter_secure_storage: ^8.1.0
+```
+
+```
+Keychain is used for iOS
+AES encryption is used for Android. AES secret key is encrypted with RSA and RSA key is stored in KeyStore
+With V5.0.0 we can use EncryptedSharedPreferences on Android by enabling it in the Android Options like so:
+```
+
+lib/core/local/secure_storage/flutter_secure_storage_provider.dart
+```dart
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final flutterSecureStorageProvider = Provider<FlutterSecureStorage>((ref) {
+  AndroidOptions _getAndroidOptions() => const AndroidOptions(
+        encryptedSharedPreferences: true,
+      );
+
+  IOSOptions _getIOSOptions() => const IOSOptions(
+        accessibility: KeychainAccessibility.first_unlock,
+      );
+  return FlutterSecureStorage(
+    aOptions: _getAndroidOptions(),
+    iOptions: _getIOSOptions(),
+  );
+});
+```
+
+lib/core/local/secure_storage/secure_storage_const.dart
+```dart
+const String hiveKey = 'hive_key';
+```
+
+lib/core/local/secure_storage/seucre_storage.dart
+```dart
+abstract class SecureStorage {
+  Future<void> setHiveKey(String value);
+  Future<String?> getHiveKey();
+}
+```
+
+```dart
+final secureStorageProvider = Provider<SecureStorage>((ref) {
+  final flutterSecureStorage = ref.watch(flutterSecureStorageProvider);
+  return SecureStorageImpl(flutterSecureStorage);
+});
+
+class SecureStorageImpl implements SecureStorage {
+  final FlutterSecureStorage _flutterSecureStorage;
+
+  SecureStorageImpl(this._flutterSecureStorage);
+
+  @override
+  Future<String?> getHiveKey() async {
+    return await _flutterSecureStorage.read(
+      key: hiveKey,
+    );
+  }
+
+  @override
+  Future<void> setHiveKey(String value) async {
+    await _flutterSecureStorage.write(
+      key: hiveKey,
+      value: value,
+    );
+  }
+}
+```
