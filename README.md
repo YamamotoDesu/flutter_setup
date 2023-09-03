@@ -851,3 +851,16 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
   }
 }
 ```
+
+15. Flutter Secure Storage
+
+pubspec.yaml
+```yaml
+  flutter_secure_storage: ^8.1.0
+```
+
+```
+Keychain is used for iOS
+AES encryption is used for Android. AES secret key is encrypted with RSA and RSA key is stored in KeyStore
+With V5.0.0 we can use EncryptedSharedPreferences on Android by enabling it in the Android Options like so:
+```
