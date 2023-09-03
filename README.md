@@ -852,7 +852,7 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
 }
 ```
 
-15. Flutter Secure Storage
+## 15. Flutter Secure Storage
 
 pubspec.yaml
 ```yaml
