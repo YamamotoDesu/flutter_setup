@@ -925,3 +925,11 @@ class SecureStorageImpl implements SecureStorage {
   }
 }
 ```
+
+## 
+
+```yaml
+  hive_flutter: ^1.1.0
+```
+
+
