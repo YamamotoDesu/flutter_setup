@@ -926,7 +926,7 @@ class SecureStorageImpl implements SecureStorage {
 }
 ```
 
-## 
+## 16. Hive Database Encryption
 
 pubspec.yaml
 ```yaml
