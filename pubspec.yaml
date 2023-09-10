@@ -49,6 +49,7 @@ dependencies:
   dio_http_formatter: ^3.1.0
   flutter_secure_storage: ^8.1.0
   hive_flutter: ^1.1.0
+  envied: ^0.3.0+3
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,7 @@ dev_dependencies:
   hive_generator: ^2.0.1
   hive_test: ^1.0.1
   build_runner: ^2.4.6
+  envied_generator: ^0.3.0+3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
