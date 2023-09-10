@@ -1127,3 +1127,12 @@ Future<void> main() async {
     
       container.read(flavorProvider.notifier).state = flavor;
 ```
+
+lib/core/remote/network_service.dart
+```dart
+final networkServiceProvider = Provider<Dio>((ref) {
+  final envReader = ref.watch(envReaderProvider);
+
+  final options = BaseOptions(
+    baseUrl: envReader.getBaseUrl(),
+```
