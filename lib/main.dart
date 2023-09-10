@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_setup/core/db/hive_db.dart';
 // import 'package:flutter_setup/core/flavor/flavor.dart';
 // import 'package:flutter_setup/core/env/env_reader.dart';
 import 'package:flutter_setup/core/providers/internet_connection_observer.dart';
@@ -13,6 +14,9 @@ Future<void> main() async {
 
   // An object that stores the state of the providers and allows overriding the behavior of a specific provider.
   final container = ProviderContainer();
+
+  // set up the database
+  container.read(hiveDbProvider);
 
   // Observer Internet Connection
   container.read(internetConnectionObserverProvider);
