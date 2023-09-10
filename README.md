@@ -1136,3 +1136,9 @@ final networkServiceProvider = Provider<Dio>((ref) {
   final options = BaseOptions(
     baseUrl: envReader.getBaseUrl(),
 ```
+
+lib/core/env/.gitignore
+```
+!.gitignore
+env.g.dart
+```
