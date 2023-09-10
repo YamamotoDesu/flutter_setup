@@ -1007,4 +1007,19 @@ Future<void> main() async {
 
 ```
 
+## 17. Obscure the database
+
+pubspec.yaml
+```dart
+  envied: ^0.3.0+3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  envied_generator: ^0.3.0+3
+```
+
+
+
 
