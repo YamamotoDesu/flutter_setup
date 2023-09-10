@@ -1010,7 +1010,11 @@ Future<void> main() async {
 ## 17. Obscure the database
 
 pubspec.yaml
-```dart
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+
   envied: ^0.3.0+3
 
 dev_dependencies:
