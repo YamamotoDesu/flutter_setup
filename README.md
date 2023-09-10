@@ -1007,7 +1007,7 @@ Future<void> main() async {
 
 ```
 
-## 17. Obscure the database
+## 17. Obscure the data
 
 pubspec.yaml
 ```yaml
