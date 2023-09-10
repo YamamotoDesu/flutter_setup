@@ -925,3 +925,86 @@ class SecureStorageImpl implements SecureStorage {
   }
 }
 ```
+
+## 16. Hive Database Encryption
+
+pubspec.yaml
+```yaml
+dependencies:
+  hive_flutter: ^1.1.0
+
+dev_dependencies:
+  hive_generator: ^2.0.1
+  hive_test: ^1.0.1
+  build_runner: ^2.4.6
+```
+
+lib/core/db/hive_box_key.dart
+```dart
+const String settingBox = 'setting_box';
+```
+
+lib/core/db/hive_box_key.dart
+```dart
+const hiveDb = 'hive_db';
+```
+
+lib/core/db/hive_db.dart
+```dart
+import 'dart:convert';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_setup/core/db/hive_box_key.dart';
+import 'package:flutter_setup/core/db/hive_constant.dart';
+import 'package:flutter_setup/core/local/secure_storage/seucre_storage.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import 'package:flutter_setup/core/local/secure_storage/secure_storage_impl.dart';
+
+final hiveDbProvider = Provider<HiveDb>((ref) {
+  final secureStorage = ref.watch(secureStorageProvider);
+  return HiveDb(secureStorage);
+});
+
+class HiveDb {
+  final SecureStorage _secureStorage;
+  HiveDb(this._secureStorage) {
+    _init();
+  }
+
+  void _init() async {
+    await Hive.initFlutter(hiveDb);
+
+    String? encryptionKey = await _secureStorage.getHiveKey();
+    if (encryptionKey == null) {
+      final key = Hive.generateSecureKey();
+      await _secureStorage.setHiveKey(base64UrlEncode(key));
+      encryptionKey = await _secureStorage.getHiveKey();
+    }
+
+    if (encryptionKey != null) {
+      final key = base64Url.decode(encryptionKey);
+      await Hive.openBox<dynamic>(
+        settingBox,
+        encryptionCipher: HiveAesCipher(key),
+      );
+    }
+  }
+}
+```
+
+lib/main.dart
+```dart
+Future<void> main() async {
+// FutureOr<void> mainApp(Flavor flavor) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // An object that stores the state of the providers and allows overriding the behavior of a specific provider.
+  final container = ProviderContainer();
+
+  // set up the database
+  container.read(hiveDbProvider);
+
+```
+
+
