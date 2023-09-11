@@ -1162,7 +1162,7 @@ CERTIFICATE=LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUYyekNDQk1PZ0F3SUJBZ0lRTWo4
 ```
 
 lib/core/env/env.dart
-```
+```dart
 @Envied(path: '.qa.env')
 abstract class EnvQA {
   @EnviedField(varName: 'BASE_URL')
@@ -1174,6 +1174,27 @@ abstract class EnvQA {
 }
 ```
 
-
+lib/core/env/env_reader.dart
+```dart
+  Uint8List getCertificate() {
+    switch (_flavor) {
+      case Flavor.dev:
+        final List<int> codeUnits = EnvDev.certificate.codeUnits;
+        final Uint8List unit8List = Uint8List.fromList(codeUnits);
+        return unit8List;
+      case Flavor.qa:
+        final List<int> codeUnits = EnvQA.certificate.codeUnits;
+        final Uint8List unit8List = Uint8List.fromList(codeUnits);
+        return unit8List;
+      case Flavor.uat:
+        final List<int> codeUnits = EnvUAT.certificate.codeUnits;
+        final Uint8List unit8List = Uint8List.fromList(codeUnits);
+        return unit8List;
+      case Flavor.prod:
+        final List<int> codeUnits = EnvProd.certificate.codeUnits;
+        final Uint8List unit8List = Uint8List.fromList(codeUnits);
+        return unit8List;
+    }
+```
 
 
