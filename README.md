@@ -1150,4 +1150,13 @@ env.g.dart
 Get Free SSL:
 https://zerossl.com/
 
+Basee64:
+https://www.base64encode.org/
+
+env
+```env
+CERTIFICATE_PATH=Basee64
+```
+
+
 
