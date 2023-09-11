@@ -1155,8 +1155,20 @@ https://www.base64encode.org/
 
 env
 ```env
-CERTIFICATE_PATH=Basee64
+CERTIFICATE=Basee64
 ```
 
+lib/core/env/env.dart
+```
+@Envied(path: '.qa.env')
+abstract class EnvQA {
+  @EnviedField(varName: 'BASE_URL')
+  static const String baseUrl = _EnvQA.baseUrl;
+  @EnviedField(varName: 'API_KEY', obfuscate: true)
+  static final int apiKey = _EnvQA.apiKey;
+  @EnviedField(varName: 'CERTIFICATE', obfuscate: true)
+  static final String certificate = _EnvDev.certificate;
+}
+```
 
 
