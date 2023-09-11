@@ -1142,3 +1142,7 @@ lib/core/env/.gitignore
 !.gitignore
 env.g.dart
 ```
+
+## 18. Secure Client - Server Connection 
+
+![image](https://github.com/YamamotoDesu/flutter_setup/assets/47273077/5415e4db-f462-4d48-8aad-e096fc12856c)
