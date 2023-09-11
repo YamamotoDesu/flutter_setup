@@ -1179,21 +1179,13 @@ lib/core/env/env_reader.dart
   Uint8List getCertificate() {
     switch (_flavor) {
       case Flavor.dev:
-        final List<int> codeUnits = EnvDev.certificate.codeUnits;
-        final Uint8List unit8List = Uint8List.fromList(codeUnits);
-        return unit8List;
+        return base64Decode(EnvDev.certificate);
       case Flavor.qa:
-        final List<int> codeUnits = EnvQA.certificate.codeUnits;
-        final Uint8List unit8List = Uint8List.fromList(codeUnits);
-        return unit8List;
+        return base64Decode(EnvQA.certificate);
       case Flavor.uat:
-        final List<int> codeUnits = EnvUAT.certificate.codeUnits;
-        final Uint8List unit8List = Uint8List.fromList(codeUnits);
-        return unit8List;
+        return base64Decode(EnvUAT.certificate);
       case Flavor.prod:
-        final List<int> codeUnits = EnvProd.certificate.codeUnits;
-        final Uint8List unit8List = Uint8List.fromList(codeUnits);
-        return unit8List;
+        return base64Decode(EnvProd.certificate);
     }
 ```
 
