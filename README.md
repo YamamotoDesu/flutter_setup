@@ -1189,4 +1189,19 @@ lib/core/env/env_reader.dart
     }
 ```
 
+lib/core/remote/network_service.dart
+```dart
+  _dio.httpClientAdapter = IOHttpClientAdapter(
+    createHttpClient: () {
+      final securityContext = SecurityContext.defaultContext;
+      final client = HttpClient();
+      securityContext.setTrustedCertificatesBytes(envReader.getCertificate());
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) {
+        return false;
+      };
+      return client;
+    },
+  );
+```
 
