@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_setup/core/env/env.dart';
 import 'package:flutter_setup/core/flavor/flavor.dart';
@@ -36,6 +39,19 @@ class EnvReader {
         return EnvUAT.apiKey.toString();
       case Flavor.prod:
         return EnvProd.apiKey.toString();
+    }
+  }
+
+  Uint8List getCertificate() {
+    switch (_flavor) {
+      case Flavor.dev:
+        return base64Decode(EnvDev.certificate);
+      case Flavor.qa:
+        return base64Decode(EnvQA.certificate);
+      case Flavor.uat:
+        return base64Decode(EnvUAT.certificate);
+      case Flavor.prod:
+        return base64Decode(EnvProd.certificate);
     }
   }
 

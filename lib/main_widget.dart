@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_setup/base/base_consumer_state.dart';
@@ -14,6 +15,8 @@ import 'package:flutter_setup/core/providers/internet_connection_observer.dart';
 
 import 'package:flutter_setup/i18n/i18n.dart';
 import 'package:upgrader/upgrader.dart';
+
+import 'core/remote/network_service.dart';
 
 class MainWidget extends ConsumerStatefulWidget {
   const MainWidget({Key? key}) : super(key: key);
@@ -112,6 +115,23 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends BaseConsumerState<HomePage> {
   int _counter = 0;
+  late Dio _dio;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _dio = ref.read(networkServiceProvider);
+      getSomeData();
+    });
+  }
+
+  void getSomeData() async {
+    final response =
+        await _dio.get('https://jsonplaceholder.typicode.com/todos/1');
+    // final response = await _dio.get('api/v1/banner/getHomeBannerSlider');
+    log.info(response); //20:31
+  }
 
   void _incrementCounter() {
     setState(() {

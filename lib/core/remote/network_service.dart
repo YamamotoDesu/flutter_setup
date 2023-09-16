@@ -1,4 +1,8 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio_http_formatter/dio_http_formatter.dart';
 import 'package:flutter_setup/core/env/env_reader.dart';
@@ -19,6 +23,19 @@ final networkServiceProvider = Provider<Dio>((ref) {
       HttpFormatter(),
       NetworkServiceInterceptor(),
     ]);
+
+  // _dio.httpClientAdapter = IOHttpClientAdapter(
+  //   createHttpClient: () {
+  //     final securityContext = SecurityContext.defaultContext;
+  //     final client = HttpClient();
+  //     securityContext.setTrustedCertificatesBytes(envReader.getCertificate());
+  //     client.badCertificateCallback =
+  //         (X509Certificate cert, String host, int port) {
+  //       return false;
+  //     };
+  //     return client;
+  //   },
+  // );
 
   return _dio;
 });
