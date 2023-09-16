@@ -1205,3 +1205,17 @@ lib/core/remote/network_service.dart
   );
 ```
 
+## 19. FingerPrint - FaceScan & Passcode
+
+pubspec.yaml
+```yaml
+  local_auth: ^2.1.7
+```
+
+iOS Integration
+
+Info.plist
+```plist
+<key>NSFaceIDUsageDescription</key>
+<string>Why is my app authenticating using face id?</string>
+```
