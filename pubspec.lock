@@ -493,6 +493,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  freerasp:
+    dependency: "direct main"
+    description:
+      name: freerasp
+      sha256: b5cbc343e34929d953e2a8fdcb8fe58d9448ac17c8dd7b102a2ffe868442c4d7
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.0"
   frontend_server_client:
     dependency: transitive
     description:

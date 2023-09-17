@@ -55,7 +55,42 @@ class EnvReader {
     }
   }
 
-  String getEnvFileName(Flavor flavor) {
-    return ".${flavor.name}.env";
+  String getAndroidBuildID() {
+    switch (_flavor) {
+      case Flavor.dev:
+        return EnvDev.androidBuildID.toString();
+      case Flavor.qa:
+        return EnvQA.androidBuildID.toString();
+      case Flavor.uat:
+        return EnvUAT.androidBuildID.toString();
+      case Flavor.prod:
+        return EnvProd.androidBuildID.toString();
+    }
+  }
+
+  String getiOSBuildID() {
+    switch (_flavor) {
+      case Flavor.dev:
+        return EnvDev.iosBuildID.toString();
+      case Flavor.qa:
+        return EnvQA.iosBuildID.toString();
+      case Flavor.uat:
+        return EnvUAT.iosBuildID.toString();
+      case Flavor.prod:
+        return EnvProd.iosBuildID.toString();
+    }
+  }
+
+  String getHash256() {
+    switch (_flavor) {
+      case Flavor.dev:
+        return EnvDev.hash256.toString();
+      case Flavor.qa:
+        return EnvQA.hash256.toString();
+      case Flavor.uat:
+        return EnvUAT.hash256.toString();
+      case Flavor.prod:
+        return EnvProd.hash256.toString();
+    }
   }
 }

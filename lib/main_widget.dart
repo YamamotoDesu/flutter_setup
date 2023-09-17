@@ -12,13 +12,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_setup/common/error/no_internet_connection_screen.dart';
 import 'package:flutter_setup/core/providers/app_background_state_provider.dart';
 import 'package:flutter_setup/core/providers/internet_connection_observer.dart';
-import 'package:flutter_setup/core/providers/local_auth_provider.dart';
 
 import 'package:flutter_setup/i18n/i18n.dart';
 import 'package:upgrader/upgrader.dart';
 
-import 'core/auth/local_auth.dart';
-import 'core/remote/network_service.dart';
+import 'package:flutter_setup/core/auth/local_auth.dart';
+import 'package:flutter_setup/core/remote/network_service.dart';
 
 class MainWidget extends ConsumerStatefulWidget {
   const MainWidget({Key? key}) : super(key: key);
