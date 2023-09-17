@@ -1242,3 +1242,14 @@ AndroidManifest.xml
 <img width="300" alt="image" src="https://github.com/YamamotoDesu/flutter_setup/assets/47273077/c1f0d390-991f-4c12-a1f4-5da6d48e731c">
 
 
+## 20. Dart Code Obfuscate
+
+```
+## Build Android release app
+* fvm flutter build apk --release --obfuscate --split-debug-info=build/app/symbols --build-name=1.0.0 --build-number=1 --flavor dev -t lib/main_dev.dart
+
+
+## Build iOS release app
+* fvm flutter build ipa --release  --obfuscate --split-debug-info=build/ios/symbols --export-options-plist build/ios/export_options.plist --build-name=1.0.0 --build-number=1 --flavor prod -t lib/main_prod.dart
+***
+
