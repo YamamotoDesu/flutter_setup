@@ -1252,4 +1252,16 @@ AndroidManifest.xml
 ## Build iOS release app
 * fvm flutter build ipa --release  --obfuscate --split-debug-info=build/ios/symbols --export-options-plist build/ios/export_options.plist --build-name=1.0.0 --build-number=1 --flavor prod -t lib/main_prod.dart
 ***
+```
+
+
+## 21. 
+
+pubspec.yaml
+```yaml
+  freerasp: ^6.2.0
+```
+
+After adding the package, you need to run the command `pod install`.
+
 
