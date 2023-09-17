@@ -1257,11 +1257,69 @@ AndroidManifest.xml
 
 ## 21. 
 
+https://www.talsec.app/
+
 pubspec.yaml
 ```yaml
   freerasp: ^6.2.0
 ```
 
 After adding the package, you need to run the command `pod install`.
+
+.dev.env
+```env
+ANDROID_BUILD_ID=test
+IOS_BUILD_ID=test
+```
+
+lib/core/env/env.dart
+```dart
+
+@Envied(path: '.dev.env')
+abstract class EnvDev {
+  // -------中略--------
+  @EnviedField(varName: 'ANDROID_BUILD_ID')
+  static final String androidBuildID = _EnvDev.androidBuildID;
+  @EnviedField(varName: 'IOS_BUILD_ID')
+  static final String iosBuildID = _EnvDev.iosBuildID;
+```
+
+lib/main.dart
+```dart
+  // security config
+  container.read(securityConfigProvider);
+
+```
+
+lib/core/env/env_reader.dart
+```dart
+  String getAndroidBuildID() {
+    switch (_flavor) {
+      case Flavor.dev:
+        return EnvDev.androidBuildID.toString();
+      case Flavor.qa:
+        return EnvQA.androidBuildID.toString();
+      case Flavor.uat:
+        return EnvUAT.androidBuildID.toString();
+      case Flavor.prod:
+        return EnvProd.androidBuildID.toString();
+    }
+  }
+
+  String getiOSBuildID() {
+    switch (_flavor) {
+      case Flavor.dev:
+        return EnvDev.iosBuildID.toString();
+      case Flavor.qa:
+        return EnvQA.iosBuildID.toString();
+      case Flavor.uat:
+        return EnvUAT.iosBuildID.toString();
+      case Flavor.prod:
+        return EnvProd.iosBuildID.toString();
+    }
+  }
+```
+
+
 
 
