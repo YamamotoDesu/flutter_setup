@@ -1238,3 +1238,7 @@ AndroidManifest.xml
   <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
 <manifest>
 ```
+
+<img width="300" alt="image" src="https://github.com/YamamotoDesu/flutter_setup/assets/47273077/c1f0d390-991f-4c12-a1f4-5da6d48e731c">
+
+
