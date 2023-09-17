@@ -1270,6 +1270,7 @@ After adding the package, you need to run the command `pod install`.
 ```env
 ANDROID_BUILD_ID=test
 IOS_BUILD_ID=test
+HASH256=LS0tLS1CRUdJTiB...
 ```
 
 lib/core/env/env.dart
@@ -1282,6 +1283,8 @@ abstract class EnvDev {
   static final String androidBuildID = _EnvDev.androidBuildID;
   @EnviedField(varName: 'IOS_BUILD_ID')
   static final String iosBuildID = _EnvDev.iosBuildID;
+  @EnviedField(varName: 'HASH256')
+  static final String hash256 = _EnvDev.hash256;
 ```
 
 lib/main.dart
