@@ -1309,16 +1309,16 @@ lib/core/env/env_reader.dart
     }
   }
 
-  String getiOSBuildID() {
+  Uint8List getHash256() {
     switch (_flavor) {
       case Flavor.dev:
-        return EnvDev.iosBuildID.toString();
+        return base64Decode(EnvDev.hash256.toString());
       case Flavor.qa:
-        return EnvQA.iosBuildID.toString();
+        return base64Decode(EnvQA.hash256.toString());
       case Flavor.uat:
-        return EnvUAT.iosBuildID.toString();
+        return base64Decode(EnvUAT.hash256.toString());
       case Flavor.prod:
-        return EnvProd.iosBuildID.toString();
+        return base64Decode(EnvProd.hash256.toString());
     }
   }
 ```
