@@ -1387,3 +1387,95 @@ class SecurityConfig {
   }
 }
 ```
+
+## 22. PassCode
+
+<img width="300" alt="image" src="https://github.com/YamamotoDesu/flutter_setup/assets/47273077/7675181b-b1e3-4950-a78b-d4f3d7e67cae">
+
+pubspec.yaml
+```yaml
+  flutter_screen_lock: ^9.0.1
+```
+
+lib/common/class/set_pass_code_screen.dart
+```dart
+import 'package:flutter/widgets.dart';
+import 'package:flutter_screen_lock/flutter_screen_lock.dart';
+
+mixin class SetPassCodeScreen {
+  void setPassCode(
+    BuildContext context, {
+    required InputController inputController,
+    String correctString = '',
+    Widget title = const Text('Create your PassCode'),
+    Widget conformTitle = const Text('Confirm your PassCode'),
+    bool useLandscape = false,
+    int retryDelay = 60,
+    required void Function(String) didConfirmed,
+    Widget Function(BuildContext, Duration)? delayBuilder,
+    Widget? footer,
+  }) {
+    screenLockCreate(
+      context: context,
+      inputController: inputController,
+      title: title,
+      useLandscape: useLandscape,
+      confirmTitle: conformTitle,
+      digits: 6,
+      retryDelay: Duration(seconds: retryDelay),
+      maxRetries: 3,
+      delayBuilder: delayBuilder ??
+          (
+            context,
+            duration,
+          ) =>
+              Text(
+                'You have to wait ${duration.inSeconds} seconds to try again',
+              ),
+      onConfirmed: didConfirmed,
+      footer: footer,
+    );
+  }
+}
+```
+
+lib/common/class/show_pass_code_screen.dart
+```dart
+import 'package:flutter/widgets.dart';
+import 'package:flutter_screen_lock/flutter_screen_lock.dart';
+
+mixin class ShowPassCodeScreen {
+  void showPassCode(
+    BuildContext context, {
+    required String correctString,
+    required void Function() didUnlocked,
+    Widget title = const Text('Enter your PassCode'),
+    bool useLandscape = false,
+    int retryDelay = 60,
+    Widget Function(BuildContext, Duration)? delayBuilder,
+    Widget? footer,
+  }) {
+    screenLock(
+      context: context,
+      correctString: correctString,
+      title: title,
+      useLandscape: useLandscape,
+      retryDelay: Duration(seconds: retryDelay),
+      maxRetries: 3,
+      delayBuilder: delayBuilder ??
+          (
+            context,
+            duration,
+          ) =>
+              Text(
+                'You have to wait ${duration.inSeconds} seconds to try again',
+              ),
+      onUnlocked: didUnlocked,
+    );
+  }
+}
+```
+
+
+
+
