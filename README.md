@@ -1476,6 +1476,163 @@ mixin class ShowPassCodeScreen {
 }
 ```
 
+lib/core/local/db/hive_db.dart
+```dart
 
+final hiveDbProvider = Provider<HiveDb>((ref) {
+  final secureStorage = ref.watch(secureStorageProvider);
+  return HiveDb(secureStorage);
+});
+
+class HiveDb {
+  final SecureStorage _secureStorage;
+  HiveDb(this._secureStorage) {
+    _init();
+  }
+
+  void _init() async {
+    await Hive.initFlutter(hiveDb);
+
+    String? encryptionKey = await _secureStorage.getHiveKey();
+    if (encryptionKey == null) {
+      final key = Hive.generateSecureKey();
+      await _secureStorage.setHiveKey(base64UrlEncode(key));
+      encryptionKey = await _secureStorage.getHiveKey();
+    }
+
+    if (encryptionKey != null) {
+      final key = base64Url.decode(encryptionKey);
+      await Hive.openBox<dynamic>(
+        settingBox,
+        encryptionCipher: HiveAesCipher(key),
+      );
+    }
+  }
+}
+```
+
+lib/features/setting/data/repository/setting_repository.dart
+```dart
+abstract class SettingRepository {
+  Future<bool> addToBox<T>(String key, T? value);
+  Future<T?> getFromBox<T>(String key);
+}
+```
+
+lib/features/setting/data/repository/setting_repository_impl.dart
+```dart
+final settingRepositoryProvider = Provider<SettingRepository>((ref) {
+  final box = ref.watch(settingBoxProvider);
+  return SettingRepositoryImpl(box);
+});
+
+class SettingRepositoryImpl implements SettingRepository {
+  final Box _box;
+
+  SettingRepositoryImpl(this._box);
+
+  @override
+  Future<bool> addToBox<T>(String key, T? value) async {
+    await _box.put(key, value);
+    return true;
+  }
+
+  @override
+  Future<T?> getFromBox<T>(String key) async {
+    return await _box.get(key);
+  }
+}
+```
+
+lib/core/local/db/provider/setting_box_provider.dart
+```dart
+final settingBoxProvider = Provider<Box>((ref) {
+  return Hive.box(settingBox);
+});
+```
+
+lib/features/setting/application/setting_service_impl.dart
+```dart
+final settingServiceProvider = Provider<SettingService>((ref) {
+  final repository = ref.watch(settingRepositoryProvider);
+  return SettingServiceImpl(repository);
+});
+
+class SettingServiceImpl implements SettingService {
+  SettingServiceImpl(this._repository);
+
+  final SettingRepository _repository;
+
+  @override
+  Future<bool> addToBox<T>(String key, T? value) async {
+    final result = await _repository.addToBox<T>(key, value);
+    return result;
+  }
+
+  @override
+  Future<T?> getFromBox<T>(String key) async {
+    return await _repository.getFromBox<T>(key);
+  }
+}
+```
+
+lib/features/setting/presentation/state/setting_state.dart
+```dart
+part 'setting_state.freezed.dart';
+
+@freezed
+class SettingState with _$SettingState {
+  const factory SettingState({
+    String? passCode,
+  }) = _SettingState;
+}
+```
+
+lib/features/setting/presentation/conroller/setting_controller.dart
+```dart
+final settingConrollerProvider =
+    StateNotifierProvider<SettingController, SettingState>((ref) {
+  final settingService = ref.watch(settingServiceProvider);
+  return SettingController(settingService, const SettingState());
+});
+
+class SettingController extends StateNotifier<SettingState> {
+  final SettingService _service;
+
+  SettingController(this._service, super.state);
+
+  void addPassCodeToBox(String key, String value) async {
+    final result = await _service.addToBox(key, value);
+    if (result) {
+      state = state.copyWith(passCode: value);
+    }
+  }
+
+  void getPassCodeFromBox(String key) async {
+    final result = await _service.getFromBox<String>(key);
+    state = state.copyWith(passCode: result);
+  }
+}
+```
+
+lib/features/setting/presentation/ui/widget/setting_screen.dart
+```dart
+class _SettingScreenState extends BaseConsumerState<SettingScreen>
+    with SetPassCodeScreen, ShowPassCodeScreen {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(settingConrollerProvider.notifier)
+          .getPassCodeFromBox(passCodeKey);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final passCode =
+        ref.watch(settingConrollerProvider.select((value) => value.passCode));
+```
 
 
