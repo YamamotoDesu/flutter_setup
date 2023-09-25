@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_setup/core/db/hive_box_key.dart';
-import 'package:flutter_setup/core/db/hive_constant.dart';
+import 'package:flutter_setup/core/local/db/hive_box_key.dart';
+import 'package:flutter_setup/core/local/db/hive_constant.dart';
 import 'package:flutter_setup/core/local/secure_storage/seucre_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -15,11 +15,9 @@ final hiveDbProvider = Provider<HiveDb>((ref) {
 
 class HiveDb {
   final SecureStorage _secureStorage;
-  HiveDb(this._secureStorage) {
-    _init();
-  }
+  HiveDb(this._secureStorage);
 
-  void _init() async {
+  Future<void> init() async {
     await Hive.initFlutter(hiveDb);
 
     String? encryptionKey = await _secureStorage.getHiveKey();

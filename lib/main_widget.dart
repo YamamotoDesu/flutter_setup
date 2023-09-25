@@ -12,6 +12,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_setup/common/error/no_internet_connection_screen.dart';
 import 'package:flutter_setup/core/providers/app_background_state_provider.dart';
 import 'package:flutter_setup/core/providers/internet_connection_observer.dart';
+import 'package:flutter_setup/features/setting/presentation/ui/widget/setting_screen.dart';
 
 import 'package:flutter_setup/i18n/i18n.dart';
 import 'package:upgrader/upgrader.dart';
@@ -89,7 +90,7 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
       ],
       home: isAppInBackground
           ? const ColoredBox(color: Colors.black)
-          : const HomePage(),
+          : const SettingScreen(),
     );
   }
 

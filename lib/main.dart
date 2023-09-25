@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_setup/core/db/hive_db.dart';
+import 'package:flutter_setup/core/local/db/hive_db.dart';
 import 'package:flutter_setup/core/flavor/flavor.dart';
 import 'package:flutter_setup/core/flavor/flavor_provider.dart';
 // import 'package:flutter_setup/core/flavor/flavor.dart';
@@ -21,7 +21,8 @@ Future<void> main() async {
   container.read(flavorProvider.notifier).state = Flavor.dev;
 
   // set up the database
-  container.read(hiveDbProvider);
+  final db = container.read(hiveDbProvider);
+  await db.init();
 
   // Observer Internet Connection
   container.read(internetConnectionObserverProvider);
