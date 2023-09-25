@@ -1387,3 +1387,252 @@ class SecurityConfig {
   }
 }
 ```
+
+## 22. PassCode
+
+<img width="300" alt="image" src="https://github.com/YamamotoDesu/flutter_setup/assets/47273077/7675181b-b1e3-4950-a78b-d4f3d7e67cae">
+
+pubspec.yaml
+```yaml
+  flutter_screen_lock: ^9.0.1
+```
+
+lib/common/class/set_pass_code_screen.dart
+```dart
+import 'package:flutter/widgets.dart';
+import 'package:flutter_screen_lock/flutter_screen_lock.dart';
+
+mixin class SetPassCodeScreen {
+  void setPassCode(
+    BuildContext context, {
+    required InputController inputController,
+    String correctString = '',
+    Widget title = const Text('Create your PassCode'),
+    Widget conformTitle = const Text('Confirm your PassCode'),
+    bool useLandscape = false,
+    int retryDelay = 60,
+    required void Function(String) didConfirmed,
+    Widget Function(BuildContext, Duration)? delayBuilder,
+    Widget? footer,
+  }) {
+    screenLockCreate(
+      context: context,
+      inputController: inputController,
+      title: title,
+      useLandscape: useLandscape,
+      confirmTitle: conformTitle,
+      digits: 6,
+      retryDelay: Duration(seconds: retryDelay),
+      maxRetries: 3,
+      delayBuilder: delayBuilder ??
+          (
+            context,
+            duration,
+          ) =>
+              Text(
+                'You have to wait ${duration.inSeconds} seconds to try again',
+              ),
+      onConfirmed: didConfirmed,
+      footer: footer,
+    );
+  }
+}
+```
+
+lib/common/class/show_pass_code_screen.dart
+```dart
+import 'package:flutter/widgets.dart';
+import 'package:flutter_screen_lock/flutter_screen_lock.dart';
+
+mixin class ShowPassCodeScreen {
+  void showPassCode(
+    BuildContext context, {
+    required String correctString,
+    required void Function() didUnlocked,
+    Widget title = const Text('Enter your PassCode'),
+    bool useLandscape = false,
+    int retryDelay = 60,
+    Widget Function(BuildContext, Duration)? delayBuilder,
+    Widget? footer,
+  }) {
+    screenLock(
+      context: context,
+      correctString: correctString,
+      title: title,
+      useLandscape: useLandscape,
+      retryDelay: Duration(seconds: retryDelay),
+      maxRetries: 3,
+      delayBuilder: delayBuilder ??
+          (
+            context,
+            duration,
+          ) =>
+              Text(
+                'You have to wait ${duration.inSeconds} seconds to try again',
+              ),
+      onUnlocked: didUnlocked,
+    );
+  }
+}
+```
+
+lib/core/local/db/hive_db.dart
+```dart
+
+final hiveDbProvider = Provider<HiveDb>((ref) {
+  final secureStorage = ref.watch(secureStorageProvider);
+  return HiveDb(secureStorage);
+});
+
+class HiveDb {
+  final SecureStorage _secureStorage;
+  HiveDb(this._secureStorage) {
+    _init();
+  }
+
+  void _init() async {
+    await Hive.initFlutter(hiveDb);
+
+    String? encryptionKey = await _secureStorage.getHiveKey();
+    if (encryptionKey == null) {
+      final key = Hive.generateSecureKey();
+      await _secureStorage.setHiveKey(base64UrlEncode(key));
+      encryptionKey = await _secureStorage.getHiveKey();
+    }
+
+    if (encryptionKey != null) {
+      final key = base64Url.decode(encryptionKey);
+      await Hive.openBox<dynamic>(
+        settingBox,
+        encryptionCipher: HiveAesCipher(key),
+      );
+    }
+  }
+}
+```
+
+lib/features/setting/data/repository/setting_repository.dart
+```dart
+abstract class SettingRepository {
+  Future<bool> addToBox<T>(String key, T? value);
+  Future<T?> getFromBox<T>(String key);
+}
+```
+
+lib/features/setting/data/repository/setting_repository_impl.dart
+```dart
+final settingRepositoryProvider = Provider<SettingRepository>((ref) {
+  final box = ref.watch(settingBoxProvider);
+  return SettingRepositoryImpl(box);
+});
+
+class SettingRepositoryImpl implements SettingRepository {
+  final Box _box;
+
+  SettingRepositoryImpl(this._box);
+
+  @override
+  Future<bool> addToBox<T>(String key, T? value) async {
+    await _box.put(key, value);
+    return true;
+  }
+
+  @override
+  Future<T?> getFromBox<T>(String key) async {
+    return await _box.get(key);
+  }
+}
+```
+
+lib/core/local/db/provider/setting_box_provider.dart
+```dart
+final settingBoxProvider = Provider<Box>((ref) {
+  return Hive.box(settingBox);
+});
+```
+
+lib/features/setting/application/setting_service_impl.dart
+```dart
+final settingServiceProvider = Provider<SettingService>((ref) {
+  final repository = ref.watch(settingRepositoryProvider);
+  return SettingServiceImpl(repository);
+});
+
+class SettingServiceImpl implements SettingService {
+  SettingServiceImpl(this._repository);
+
+  final SettingRepository _repository;
+
+  @override
+  Future<bool> addToBox<T>(String key, T? value) async {
+    final result = await _repository.addToBox<T>(key, value);
+    return result;
+  }
+
+  @override
+  Future<T?> getFromBox<T>(String key) async {
+    return await _repository.getFromBox<T>(key);
+  }
+}
+```
+
+lib/features/setting/presentation/state/setting_state.dart
+```dart
+part 'setting_state.freezed.dart';
+
+@freezed
+class SettingState with _$SettingState {
+  const factory SettingState({
+    String? passCode,
+  }) = _SettingState;
+}
+```
+
+lib/features/setting/presentation/conroller/setting_controller.dart
+```dart
+final settingConrollerProvider =
+    StateNotifierProvider<SettingController, SettingState>((ref) {
+  final settingService = ref.watch(settingServiceProvider);
+  return SettingController(settingService, const SettingState());
+});
+
+class SettingController extends StateNotifier<SettingState> {
+  final SettingService _service;
+
+  SettingController(this._service, super.state);
+
+  void addPassCodeToBox(String key, String value) async {
+    final result = await _service.addToBox(key, value);
+    if (result) {
+      state = state.copyWith(passCode: value);
+    }
+  }
+
+  void getPassCodeFromBox(String key) async {
+    final result = await _service.getFromBox<String>(key);
+    state = state.copyWith(passCode: result);
+  }
+}
+```
+
+lib/features/setting/presentation/ui/widget/setting_screen.dart
+```dart
+class _SettingScreenState extends BaseConsumerState<SettingScreen>
+    with SetPassCodeScreen, ShowPassCodeScreen {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(settingConrollerProvider.notifier)
+          .getPassCodeFromBox(passCodeKey);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final passCode =
+        ref.watch(settingConrollerProvider.select((value) => value.passCode));
+```
+
+
