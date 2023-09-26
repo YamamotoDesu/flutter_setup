@@ -15,6 +15,7 @@ import 'package:flutter_setup/core/providers/internet_connection_observer.dart';
 import 'package:flutter_setup/features/setting/presentation/ui/widget/setting_screen.dart';
 
 import 'package:flutter_setup/i18n/i18n.dart';
+import 'package:flutter_setup/route/go_router_provider.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:flutter_setup/core/auth/local_auth.dart';
@@ -73,9 +74,11 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final isAppInBackground = ref.watch(appBackgroundStateProvider);
-    return MaterialApp(
-      navigatorKey: navigatorKey,
+    final router = ref.watch(goRouterProvider);
+    return MaterialApp.router(
+      routeInformationParser: router.routeInformationParser,
+      routeInformationProvider: router.routeInformationProvider,
+      routerDelegate: router.routerDelegate,
       scaffoldMessengerKey: scaffoldMessengerKey,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -88,9 +91,6 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: isAppInBackground
-          ? const ColoredBox(color: Colors.black)
-          : const SettingScreen(),
     );
   }
 
