@@ -1635,4 +1635,43 @@ class _SettingScreenState extends BaseConsumerState<SettingScreen>
         ref.watch(settingConrollerProvider.select((value) => value.passCode));
 ```
 
+## 23. Setup GoRouter with Riverpod
+
+pubspec.yaml
+```yaml
+  go_router: ^11.0.0
+```
+
+lib/route/go_router_provider.dart
+```dart
+final goRouterProvider = Provider<GoRouter>((ref) {
+  return GoRouter(
+    initialLocation: '/setting',
+    routes: <RouteBase>[
+      GoRoute(
+        path: '/setting',
+        name: settingRoute,
+        builder: (context, state) => SettingScreen(
+          key: state.pageKey,
+        ),
+      ),
+    ],
+    errorBuilder: (context, state) => NoRouteScreen(
+      key: state.pageKey,
+    ),
+  );
+});
+```
+
+lib/main_widget.dart
+```dart
+  Widget build(BuildContext context) {
+    final router = ref.watch(goRouterProvider);
+    return MaterialApp.router(
+      routeInformationParser: router.routeInformationParser,
+      routeInformationProvider: router.routeInformationProvider,
+      routerDelegate: router.routerDelegate,
+      scaffoldMessengerKey: scaffoldMessengerKey,
+```
+
 
