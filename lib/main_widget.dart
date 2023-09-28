@@ -72,7 +72,7 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
     );
   }
 
-  @override
+  @override //0:35
   Widget build(BuildContext context) {
     final router = ref.watch(goRouterProvider);
     return MaterialApp.router(
