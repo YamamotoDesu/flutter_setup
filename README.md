@@ -1674,4 +1674,145 @@ lib/main_widget.dart
       scaffoldMessengerKey: scaffoldMessengerKey,
 ```
 
+## 24. BottomNavigation
 
+lib/features/dashboard/presentation/ui/dashboard_screen.dart
+```dart
+class DashboardScreen extends StatefulWidget {
+  final Widget child;
+  const DashboardScreen({super.key, required this.child});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: widget.child,
+      bottomNavigationBar: const BottomNavigationWidget(),
+    );
+  }
+}
+
+```
+
+lib/features/dashboard/presentation/controller/dashboard_controller.dart
+```dart
+final dashboardControllerProvider =
+    StateNotifierProvider<DashboardControlleer, DashboardState>((ref) {
+  return DashboardControlleer();
+});
+
+class DashboardControlleer extends StateNotifier<DashboardState> {
+  DashboardControlleer() : super(const DashboardState());
+
+  void setPageIndex(int value) {
+    state = state.copyWith(pageIndex: value);
+  }
+}
+
+```
+
+lib/features/dashboard/presentation/state/dashboard_state.dart
+```dart
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'dashboard_state.freezed.dart';
+
+@freezed // 16.54
+class DashboardState with _$DashboardState {
+  const factory DashboardState({
+    @Default(0) int pageIndex,
+  }) = _DashboardState;
+}
+```
+
+lib/features/dashboard/presentation/ui/dashboard_screen.dart
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_setup/base/base_consumer_state.dart';
+import 'package:flutter_setup/features/dashboard/presentation/controller/dashboard_controller.dart';
+import 'package:go_router/go_router.dart';
+
+class BottomNavigationWidget extends ConsumerStatefulWidget {
+  const BottomNavigationWidget({super.key});
+
+  @override
+  ConsumerState<BottomNavigationWidget> createState() =>
+      _BottomNavigationWidgetState();
+}
+
+class _BottomNavigationWidgetState
+    extends BaseConsumerState<BottomNavigationWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final index = ref
+        .watch(dashboardControllerProvider.select((value) => value.pageIndex));
+    return BottomNavigationBar(
+      currentIndex: _calulateSelectedIndex(context),
+      onTap: (value) => _onItemTapped(value),
+      selectedItemColor: Colors.green,
+      unselectedItemColor: Colors.grey,
+      showUnselectedLabels: true,
+      selectedLabelStyle: const TextStyle(
+        color: Colors.green,
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+      ),
+      unselectedLabelStyle: const TextStyle(
+        color: Colors.grey,
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+      ),
+      items: const [
+        BottomNavigationBarItem(
+          activeIcon: Icon(Icons.home_filled),
+          icon: Icon(Icons.home),
+          label: "Home",
+        ),
+        BottomNavigationBarItem(
+          activeIcon: Icon(Icons.shopify),
+          icon: Icon(Icons.shopping_bag),
+          label: "Cart",
+        ),
+        BottomNavigationBarItem(
+          activeIcon: Icon(Icons.settings),
+          icon: Icon(Icons.settings_applications),
+          label: "Settings",
+        ),
+      ],
+    );
+  }
+
+  static int _calulateSelectedIndex(BuildContext context) {
+    final GoRouterState route = GoRouterState.of(context);
+    final String location = route.uri.toString();
+    if (location == "/") {
+      return 0;
+    } else if (location == "/cart") {
+      return 1;
+    } else if (location == "/setting") {
+      return 2;
+    }
+    return 0;
+  }
+
+  void _onItemTapped(int index) {
+    //ref.read(dashboardControllerProvider.notifier).setPageIndex(index);
+    switch (index) {
+      case 0:
+        GoRouter.of(context).go("/");
+        break;
+      case 1:
+        GoRouter.of(context).go("/cart");
+        break;
+      case 2:
+        GoRouter.of(context).go("/setting");
+        break;
+    }
+  }
+}
+```
