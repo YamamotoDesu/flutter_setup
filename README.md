@@ -1819,6 +1819,8 @@ class _BottomNavigationWidgetState
 
 ## 25. ShellRoute
 
+<img width="300" alt="image" src="https://github.com/YamamotoDesu/flutter_setup/assets/47273077/cea913ad-e99a-4d36-ab21-647d617f2ebf">
+
 lib/route/route_name.dart
 ```dart
 const String homeRoute = 'home';
