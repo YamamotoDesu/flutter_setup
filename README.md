@@ -1990,3 +1990,80 @@ final goRouterProvider = Provider<GoRouter>((ref) {
   );
 });
 ```
+
+lib/route/go_router_provider.dart
+```dart
+final GlobalKey<NavigatorState> navigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'root');
+final GlobalKey<NavigatorState> _shellNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'shell');
+
+final goRouterProvider = Provider<GoRouter>((ref) {
+  return GoRouter(
+    navigatorKey: navigatorKey,
+    initialLocation: '/',
+    routes: <RouteBase>[
+      GoRoute(
+        parentNavigatorKey: navigatorKey,
+        path: '/noInternet',
+        name: noInternetRoute,
+        builder: (context, state) => NoInternetConnectionScreen(
+          key: state.pageKey,
+        ),
+      ),
+      ShellRoute(
+        navigatorKey: _shellNavigatorKey,
+        builder: (context, state, child) {
+          return DashboardScreen(
+            key: state.pageKey,
+            child: child,
+          );
+        },
+        routes: [
+          GoRoute(
+            path: '/',
+            name: homeRoute,
+            pageBuilder: (context, state) {
+              return NoTransitionPage(
+                key: state.pageKey,
+                child: HomeScreen(
+                  key: state.pageKey,
+                ),
+              );
+            },
+          ),
+          GoRoute(
+            path: '/cart',
+            name: cartRoute,
+            pageBuilder: (context, state) {
+              return NoTransitionPage(
+                key: state.pageKey,
+                child: CartScreen(
+                  key: state.pageKey,
+                ),
+              );
+            },
+          ),
+          GoRoute(
+            path: '/setting',
+            name: settingRoute,
+            pageBuilder: (context, state) {
+              return NoTransitionPage(
+                key: state.pageKey,
+                child: SettingScreen(
+                  key: state.pageKey,
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    ],
+    errorBuilder: (context, state) => NoRouteScreen(
+      key: state.pageKey,
+    ),
+  );
+});
+```
+
+
