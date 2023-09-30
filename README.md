@@ -1816,3 +1816,254 @@ class _BottomNavigationWidgetState
   }
 }
 ```
+
+## 25. ShellRoute
+
+lib/route/route_name.dart
+```dart
+const String homeRoute = 'home';
+const String cartRoute = 'cart';
+const String settingRoute = 'setting';
+const String noInternetRoute = 'noInternet';
+```
+
+lib/features/dashboard/presentation/ui/widget/bottom_navigation_widget.dart
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_setup/base/base_consumer_state.dart';
+import 'package:flutter_setup/features/dashboard/presentation/controller/dashboard_controller.dart';
+import 'package:go_router/go_router.dart';
+
+class BottomNavigationWidget extends ConsumerStatefulWidget {
+  const BottomNavigationWidget({super.key});
+
+  @override
+  ConsumerState<BottomNavigationWidget> createState() =>
+      _BottomNavigationWidgetState();
+}
+
+class _BottomNavigationWidgetState
+    extends BaseConsumerState<BottomNavigationWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final index = ref
+        .watch(dashboardControllerProvider.select((value) => value.pageIndex));
+    return BottomNavigationBar(
+      currentIndex: _calulateSelectedIndex(context),
+      onTap: (value) => _onItemTapped(value),
+      selectedItemColor: Colors.green,
+      unselectedItemColor: Colors.grey,
+      showUnselectedLabels: true,
+      selectedLabelStyle: const TextStyle(
+        color: Colors.green,
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+      ),
+      unselectedLabelStyle: const TextStyle(
+        color: Colors.grey,
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+      ),
+      items: const [
+        BottomNavigationBarItem(
+          activeIcon: Icon(Icons.home_filled),
+          icon: Icon(Icons.home),
+          label: "Home",
+        ),
+        BottomNavigationBarItem(
+          activeIcon: Icon(Icons.shopify),
+          icon: Icon(Icons.shopping_bag),
+          label: "Cart",
+        ),
+        BottomNavigationBarItem(
+          activeIcon: Icon(Icons.settings),
+          icon: Icon(Icons.settings_applications),
+          label: "Setting",
+        ),
+      ],
+    );
+  }
+
+  static int _calulateSelectedIndex(BuildContext context) {
+    final GoRouterState route = GoRouterState.of(context);
+    final String location = route.uri.toString();
+    if (location == "/") {
+      return 0;
+    } else if (location == "/cart") {
+      return 1;
+    } else if (location == "/setting") {
+      return 2;
+    }
+    return 0;
+  }
+
+  void _onItemTapped(int index) {
+    //ref.read(dashboardControllerProvider.notifier).setPageIndex(index);
+    switch (index) {
+      case 0:
+        GoRouter.of(context).go("/");
+        break;
+      case 1:
+        GoRouter.of(context).go("/cart");
+        break;
+      case 2:
+        GoRouter.of(context).go("/setting");
+        break;
+    }
+  }
+}
+```
+
+lib/route/go_router_provider.dart
+```dart
+
+final GlobalKey<NavigatorState> navigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'root');
+final GlobalKey<NavigatorState> _shellNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'shell');
+
+final goRouterProvider = Provider<GoRouter>((ref) {
+  return GoRouter(
+    navigatorKey: navigatorKey,
+    initialLocation: '/',
+    routes: <RouteBase>[
+      GoRoute(
+        parentNavigatorKey: navigatorKey,
+        path: '/noInternet',
+        name: noInternetRoute,
+        builder: (context, state) => NoInternetConnectionScreen(
+          key: state.pageKey,
+        ),
+      ),
+      ShellRoute(
+        navigatorKey: _shellNavigatorKey,
+        builder: (context, state, child) {
+          return DashboardScreen(
+            key: state.pageKey,
+            child: child,
+          );
+        },
+        routes: [
+          GoRoute(
+            path: '/',
+            name: homeRoute,
+            pageBuilder: (context, state) {
+              return NoTransitionPage(
+                key: state.pageKey,
+                child: HomeScreen(
+                  key: state.pageKey,
+                ),
+              );
+            },
+          ),
+          GoRoute(
+            path: '/cart',
+            name: cartRoute,
+            pageBuilder: (context, state) {
+              return NoTransitionPage(
+                key: state.pageKey,
+                child: CartScreen(
+                  key: state.pageKey,
+                ),
+              );
+            },
+          ),
+          GoRoute(
+            path: '/setting',
+            name: settingRoute,
+            pageBuilder: (context, state) {
+              return NoTransitionPage(
+                key: state.pageKey,
+                child: SettingScreen(
+                  key: state.pageKey,
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    ],
+    errorBuilder: (context, state) => NoRouteScreen(
+      key: state.pageKey,
+    ),
+  );
+});
+```
+
+lib/route/go_router_provider.dart
+```dart
+final GlobalKey<NavigatorState> navigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'root');
+final GlobalKey<NavigatorState> _shellNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'shell');
+
+final goRouterProvider = Provider<GoRouter>((ref) {
+  return GoRouter(
+    navigatorKey: navigatorKey,
+    initialLocation: '/',
+    routes: <RouteBase>[
+      GoRoute(
+        parentNavigatorKey: navigatorKey,
+        path: '/noInternet',
+        name: noInternetRoute,
+        builder: (context, state) => NoInternetConnectionScreen(
+          key: state.pageKey,
+        ),
+      ),
+      ShellRoute(
+        navigatorKey: _shellNavigatorKey,
+        builder: (context, state, child) {
+          return DashboardScreen(
+            key: state.pageKey,
+            child: child,
+          );
+        },
+        routes: [
+          GoRoute(
+            path: '/',
+            name: homeRoute,
+            pageBuilder: (context, state) {
+              return NoTransitionPage(
+                key: state.pageKey,
+                child: HomeScreen(
+                  key: state.pageKey,
+                ),
+              );
+            },
+          ),
+          GoRoute(
+            path: '/cart',
+            name: cartRoute,
+            pageBuilder: (context, state) {
+              return NoTransitionPage(
+                key: state.pageKey,
+                child: CartScreen(
+                  key: state.pageKey,
+                ),
+              );
+            },
+          ),
+          GoRoute(
+            path: '/setting',
+            name: settingRoute,
+            pageBuilder: (context, state) {
+              return NoTransitionPage(
+                key: state.pageKey,
+                child: SettingScreen(
+                  key: state.pageKey,
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    ],
+    errorBuilder: (context, state) => NoRouteScreen(
+      key: state.pageKey,
+    ),
+  );
+});
+```
+
+
