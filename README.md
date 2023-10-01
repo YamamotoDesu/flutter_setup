@@ -2117,3 +2117,39 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       ),
 ```
 
+## 27. Route Guard
+lib/core/route/notifier/go_router_notifier.dart
+```dart
+final goRouterNotiferProvider = Provider<GoRouterNotider>((ref) {
+  return GoRouterNotider();
+});
+
+class GoRouterNotider extends ChangeNotifier {
+  bool _isLoggedIn = false;
+  bool get isLoggedIn => _isLoggedIn;
+  set isLoggeIn(bool value) {
+    _isLoggedIn = value;
+    notifyListeners();
+  }
+}
+```
+
+lib/features/auth/presentation/ui/login_screen.dart
+```dart
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ElevatedButton.icon(
+              onPressed: () {
+                ref.read(goRouterNotiferProvider).isLoggeIn = true;
+              },
+```
+
+lib/features/setting/presentation/ui/setting_screen.dart
+```dart
+          ElevatedButton.icon(
+            onPressed: () {
+              ref.read(goRouterNotiferProvider).isLoggeIn = false;
+            },
+```
