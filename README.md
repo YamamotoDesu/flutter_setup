@@ -2068,4 +2068,53 @@ final goRouterProvider = Provider<GoRouter>((ref) {
 });
 ```
 
+## 26. GoRoute Listener
+
+lib/core/route/notifier/go_router_notifier.dart
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final goRouterNotiferProvider = Provider<GoRouterNotider>((ref) {
+  return GoRouterNotider();
+});
+
+class GoRouterNotider extends ChangeNotifier {}
+```
+
+lib/core/route/go_router_provider.dart
+```dart
+final goRouterProvider = Provider<GoRouter>((ref) {
+  return GoRouter(
+    navigatorKey: navigatorKey,
+    initialLocation: '/',
+    refreshListenable: ref.watch(goRouterNotiferProvider),
+    routes: <RouteBase>[
+      GoRoute(
+        parentNavigatorKey: navigatorKey,
+        path: '/noInternet',
+        name: noInternetRoute,
+        builder: (context, state) => NoInternetConnectionScreen(
+          key: state.pageKey,
+        ),
+      ),
+      GoRoute(
+        parentNavigatorKey: navigatorKey,
+        path: '/login',
+        name: loginRoute,
+        builder: (context, state) => LoginScreen(
+          key: state.pageKey,
+        ),
+        routes: [
+          GoRoute(
+            parentNavigatorKey: navigatorKey,
+            path: '/signUp',
+            name: signUpRoute,
+            builder: (context, state) => SignUpScreen(
+              key: state.pageKey,
+            ),
+          ),
+        ],
+      ),
+```
 
