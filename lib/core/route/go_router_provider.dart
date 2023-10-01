@@ -8,11 +8,11 @@ import 'package:flutter_setup/features/auth/presentation/ui/signup_screen.dart';
 import 'package:flutter_setup/features/cart/presentation/ui/cart_screen.dart';
 import 'package:flutter_setup/features/dashboard/presentation/ui/dashboard_screen.dart';
 import 'package:flutter_setup/features/home/presentation/ui/widget/home_screen.dart';
-import 'package:flutter_setup/features/setting/presentation/ui/widget/setting_screen.dart';
+import 'package:flutter_setup/features/setting/presentation/ui/setting_screen.dart';
 import 'package:flutter_setup/core/route/route_name.dart';
 import 'package:go_router/go_router.dart';
 
-final GlobalKey<NavigatorState> navigatorKey =
+final GlobalKey<NavigatorState> _routeNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
 final GlobalKey<NavigatorState> _shellNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'shell');
@@ -22,17 +22,24 @@ final goRouterProvider = Provider<GoRouter>((ref) {
   final notifier = ref.read(goRouterNotiferProvider);
 
   return GoRouter(
-    navigatorKey: navigatorKey,
+    navigatorKey: _routeNavigatorKey,
     initialLocation: '/',
     refreshListenable: notifier,
     redirect: (context, state) {
       final isLoggedIn = notifier.isLoggedIn;
       final isGoingToLogin = state.uri.path == '/login';
+      final isGoingToNoInternet = state.uri.path == '/noInternet';
 
-      if (isLoggedIn && isGoingToLogin && !isDuplicate) {
+      if (isLoggedIn &&
+          isGoingToLogin &&
+          !isDuplicate &&
+          !isGoingToNoInternet) {
         isDuplicate = true;
         return '/'; // redirect to home
-      } else if (!isLoggedIn && !isGoingToLogin && !isDuplicate) {
+      } else if (!isLoggedIn &&
+          !isGoingToLogin &&
+          !isDuplicate &&
+          !isGoingToNoInternet) {
         isDuplicate = true;
         return '/login'; // redirect to login
       }
@@ -45,7 +52,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     },
     routes: <RouteBase>[
       GoRoute(
-        parentNavigatorKey: navigatorKey,
+        parentNavigatorKey: _routeNavigatorKey,
         path: '/noInternet',
         name: noInternetRoute,
         builder: (context, state) => NoInternetConnectionScreen(
@@ -53,7 +60,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         ),
       ),
       GoRoute(
-        parentNavigatorKey: navigatorKey,
+        parentNavigatorKey: _routeNavigatorKey,
         path: '/login',
         name: loginRoute,
         builder: (context, state) => LoginScreen(

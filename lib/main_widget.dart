@@ -9,7 +9,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 /// auto generated after you run `flutter pub get`
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_setup/common/error/no_internet_connection_screen.dart';
 import 'package:flutter_setup/core/providers/app_background_state_provider.dart';
 import 'package:flutter_setup/core/providers/internet_connection_observer.dart';
 
@@ -42,11 +41,12 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
     final isConnected =
         await ref.read(internetConnectionObserverProvider).isNetworkConnected();
     if (!isConnected && mounted) {
-      navigatorKey.currentState?.push(
-        MaterialPageRoute(
-          builder: (_) => const NoInternetConnectionScreen(),
-        ),
-      );
+      ref.read(goRouterProvider).push('/noInternet');
+      // navigatorKey.currentState?.push(
+      //   MaterialPageRoute(
+      //     builder: (_) => const NoInternetConnectionScreen(),
+      //   ),
+      // );
     }
   }
 
@@ -55,7 +55,13 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
         ref.read(internetConnectionObserverProvider).hasConnectionStream.stream;
     connectionStream.listen((isConnected) {
       if (!isConnected && mounted) {
-        _showSnackbar();
+        ref.read(goRouterProvider).push('/noInternet');
+        // _showSnackbar();
+        // navigatorKey.currentState?.push(
+        //   MaterialPageRoute(
+        //     builder: (_) => const NoInternetConnectionScreen(),
+        //   ),
+        // );
       }
     });
   }
