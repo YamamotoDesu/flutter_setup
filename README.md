@@ -2153,3 +2153,45 @@ lib/features/setting/presentation/ui/setting_screen.dart
               ref.read(goRouterNotiferProvider).isLoggeIn = false;
             },
 ```
+
+## 27. GoRoute Navigate with Riverpod
+
+```dart
+    final connectionStream =
+        ref.read(internetConnectionObserverProvider).hasConnectionStream.stream;
+    connectionStream.listen((isConnected) {
+      if (!isConnected && mounted) {
+        ref.read(goRouterProvider).push('/noInternet');
+```
+
+lib/core/route/go_router_provider.dart
+```dart
+final GlobalKey<NavigatorState> _routeNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'root');
+final GlobalKey<NavigatorState> _shellNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'shell');
+
+final goRouterProvider = Provider<GoRouter>((ref) {
+  bool isDuplicate = false;
+  final notifier = ref.read(goRouterNotiferProvider);
+
+  return GoRouter(
+    navigatorKey: _routeNavigatorKey,
+    initialLocation: '/',
+    refreshListenable: notifier,
+    redirect: (context, state) {
+      final isLoggedIn = notifier.isLoggedIn;
+      final isGoingToLogin = state.uri.path == '/login';
+      final isGoingToNoInternet = state.uri.path == '/noInternet';
+
+      if (isLoggedIn &&
+          isGoingToLogin &&
+          !isDuplicate &&
+          !isGoingToNoInternet) {
+        isDuplicate = true;
+        return '/'; // redirect to home
+      } else if (!isLoggedIn &&
+          !isGoingToLogin &&
+          !isDuplicate &&
+          !isGoingToNoInternet) {
+```
