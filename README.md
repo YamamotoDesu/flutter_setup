@@ -2107,8 +2107,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         ),
         routes: [
           GoRoute(
-            parentNavigatorKey: navigatorKey,
-            path: '/signUp',
+            path: 'signUp',
             name: signUpRoute,
             builder: (context, state) => SignUpScreen(
               key: state.pageKey,
