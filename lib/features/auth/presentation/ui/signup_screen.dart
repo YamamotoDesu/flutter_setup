@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_setup/base/base_consumer_state.dart';
+import 'package:flutter_setup/core/route/notifier/go_router_notifier.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
@@ -23,7 +24,9 @@ class _SignUpScreenState extends BaseConsumerState<SignUpScreen> {
         children: [
           const Text("SignUp Screen"),
           ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              ref.read(goRouterNotiferProvider).isLoggeIn = false;
+            },
             icon: const Icon(Icons.login),
             label: const Text('SignUp'),
           ),

@@ -5,6 +5,7 @@ import 'package:flutter_setup/base/base_consumer_state.dart';
 import 'package:flutter_setup/common/class/set_pass_code_screen.dart';
 import 'package:flutter_setup/common/class/show_pass_code_screen.dart';
 import 'package:flutter_setup/core/local/db/hive_constant.dart';
+import 'package:flutter_setup/core/route/notifier/go_router_notifier.dart';
 import 'package:flutter_setup/features/setting/presentation/conroller/setting_controller.dart';
 
 class SettingScreen extends ConsumerStatefulWidget {
@@ -53,6 +54,14 @@ class _SettingScreenState extends BaseConsumerState<SettingScreen>
               },
             ),
           ),
+          const SizedBox(height: 8),
+          ElevatedButton.icon(
+            onPressed: () {
+              ref.read(goRouterNotiferProvider).isLoggeIn = false;
+            },
+            icon: const Icon(Icons.logout),
+            label: const Text('LogOut'),
+          )
         ],
       ),
     );

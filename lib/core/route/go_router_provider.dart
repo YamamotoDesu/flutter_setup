@@ -18,10 +18,31 @@ final GlobalKey<NavigatorState> _shellNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'shell');
 
 final goRouterProvider = Provider<GoRouter>((ref) {
+  bool isDuplicate = false;
+  final notifier = ref.read(goRouterNotiferProvider);
+
   return GoRouter(
     navigatorKey: navigatorKey,
     initialLocation: '/',
-    refreshListenable: ref.watch(goRouterNotiferProvider),
+    refreshListenable: notifier,
+    redirect: (context, state) {
+      final isLoggedIn = notifier.isLoggedIn;
+      final isGoingToLogin = state.uri.path == '/login';
+
+      if (isLoggedIn && isGoingToLogin && !isDuplicate) {
+        isDuplicate = true;
+        return '/'; // redirect to home
+      } else if (!isLoggedIn && !isGoingToLogin && !isDuplicate) {
+        isDuplicate = true;
+        return '/login'; // redirect to login
+      }
+
+      if (isDuplicate) {
+        isDuplicate = false;
+      }
+
+      return null;
+    },
     routes: <RouteBase>[
       GoRoute(
         parentNavigatorKey: navigatorKey,
@@ -40,8 +61,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         ),
         routes: [
           GoRoute(
-            parentNavigatorKey: navigatorKey,
-            path: '/signUp',
+            path: 'signUp',
             name: signUpRoute,
             builder: (context, state) => SignUpScreen(
               key: state.pageKey,
