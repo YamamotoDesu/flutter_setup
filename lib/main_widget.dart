@@ -14,6 +14,7 @@ import 'package:flutter_setup/core/providers/internet_connection_observer.dart';
 
 import 'package:flutter_setup/i18n/i18n.dart';
 import 'package:flutter_setup/core/route/go_router_provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:flutter_setup/core/auth/local_auth.dart';
