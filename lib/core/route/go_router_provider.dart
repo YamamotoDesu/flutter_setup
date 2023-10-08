@@ -28,7 +28,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     refreshListenable: notifier,
     redirect: (context, state) {
       final isLoggedIn = notifier.isLoggedIn;
-      final isGoingToLogin = state.uri.path == '/login';
+      final isGoingToLogin = state.matchedLocation == '/login';
       final isGoingToNoInternet = state.uri.path == '/noInternet';
 
       if (isLoggedIn &&
@@ -77,34 +77,56 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
-      ShellRoute(
-        navigatorKey: _shellNavigatorKey,
-        builder: (context, state, child) {
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
           return DashboardScreen(
             key: state.pageKey,
-            child: child,
+            child: navigationShell,
           );
         },
-        routes: [
-          GoRoute(
-            path: '/',
-            name: homeRoute,
-            pageBuilder: (context, state) {
-              return NoTransitionPage(
-                key: state.pageKey,
-                child: HomeScreen(
-                  key: state.pageKey,
-                ),
-              );
-            },
+        branches: <StatefulShellBranch>[
+          // home
+          StatefulShellBranch(
             routes: [
               GoRoute(
-                path: 'detail',
-                name: productDetailRoute,
+                path: '/',
+                name: homeRoute,
                 pageBuilder: (context, state) {
                   return NoTransitionPage(
                     key: state.pageKey,
-                    child: ProductDetailScreen(
+                    child: HomeScreen(
+                      key: state.pageKey,
+                    ),
+                  );
+                },
+                routes: [
+                  GoRoute(
+                    path: 'detail',
+                    name: productDetailRoute,
+                    pageBuilder: (context, state) {
+                      return NoTransitionPage(
+                        key: state.pageKey,
+                        child: ProductDetailScreen(
+                          key: state.pageKey,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          // cart
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/cart',
+                name: cartRoute,
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: CartScreen(
                       key: state.pageKey,
                     ),
                   );
@@ -112,29 +134,23 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               ),
             ],
           ),
-          GoRoute(
-            path: '/cart',
-            name: cartRoute,
-            pageBuilder: (context, state) {
-              return NoTransitionPage(
-                key: state.pageKey,
-                child: CartScreen(
-                  key: state.pageKey,
-                ),
-              );
-            },
-          ),
-          GoRoute(
-            path: '/setting',
-            name: settingRoute,
-            pageBuilder: (context, state) {
-              return NoTransitionPage(
-                key: state.pageKey,
-                child: SettingScreen(
-                  key: state.pageKey,
-                ),
-              );
-            },
+
+          // Setting
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/setting',
+                name: settingRoute,
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: SettingScreen(
+                      key: state.pageKey,
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         ],
       ),
@@ -143,4 +159,65 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       key: state.pageKey,
     ),
   );
+  //   ShellRoute(
+  //     navigatorKey: _shellNavigatorKey,
+  //     builder: (context, state, child) {
+  //       return DashboardScreen(
+  //         key: state.pageKey,
+  //         child: child,
+  //       );
+  //     },
+  //     routes: [
+  //       GoRoute(
+  //         path: '/',
+  //         name: homeRoute,
+  //         pageBuilder: (context, state) {
+  //           return NoTransitionPage(
+  //             key: state.pageKey,
+  //             child: HomeScreen(
+  //               key: state.pageKey,
+  //             ),
+  //           );
+  //         },
+  //         routes: [
+  //           GoRoute(
+  //             path: 'detail',
+  //             name: productDetailRoute,
+  //             pageBuilder: (context, state) {
+  //               return NoTransitionPage(
+  //                 key: state.pageKey,
+  //                 child: ProductDetailScreen(
+  //                   key: state.pageKey,
+  //                 ),
+  //               );
+  //             },
+  //           ),
+  //         ],
+  //       ),
+  //       GoRoute(
+  //         path: '/cart',
+  //         name: cartRoute,
+  //         pageBuilder: (context, state) {
+  //           return NoTransitionPage(
+  //             key: state.pageKey,
+  //             child: CartScreen(
+  //               key: state.pageKey,
+  //             ),
+  //           );
+  //         },
+  //       ),
+  //       GoRoute(
+  //         path: '/setting',
+  //         name: settingRoute,
+  //         pageBuilder: (context, state) {
+  //           return NoTransitionPage(
+  //             key: state.pageKey,
+  //             child: SettingScreen(
+  //               key: state.pageKey,
+  //             ),
+  //           );
+  //         },
+  //       ),
+  //     ],
+  //   ),
 });

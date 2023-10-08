@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_setup/features/dashboard/presentation/ui/widget/bottom_navigation_widget.dart';
+import 'package:go_router/go_router.dart';
 
 class DashboardScreen extends StatefulWidget {
-  final Widget child;
+  final StatefulNavigationShell child;
+  // final Widget child;
   const DashboardScreen({super.key, required this.child});
 
   @override
@@ -14,7 +16,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: widget.child,
-      bottomNavigationBar: const BottomNavigationWidget(),
+      bottomNavigationBar: BottomNavigationWidget(
+        child: widget.child,
+      ),
     );
   }
 }
