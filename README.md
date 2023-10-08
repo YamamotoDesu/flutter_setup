@@ -1,4 +1,4 @@
-# [ecom_app](https://github.com/rddewan/flutter-project-setup)
+# [flutter_setup](https://github.com/rddewan/flutter-project-setup)
 
 ## 1. Github Workflow Srategy
 ```
