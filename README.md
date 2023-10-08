@@ -2196,7 +2196,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           !isGoingToNoInternet) {
 ```
 
-## GoRouter Dismiss Dialog
+## 28. GoRouter Dismiss Dialog
 
 lib/features/product/presentation/ui/product_detail_screen.dart
 ```dart
@@ -2283,6 +2283,145 @@ class _ProductDetailScreenState extends BaseConsumerState<ProductDetailScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+```
+
+## 29. ShellRoute → StatefulShellRoute
+
+![2023-10-08 13 05 03](https://github.com/YamamotoDesu/flutter_setup/assets/47273077/43d7efbd-2c9c-49ab-b1f9-97c2862fda8d)
+
+lib/core/route/go_router_provider.dart
+```dart
+class BottomNavigationWidget extends StatelessWidget {
+  const BottomNavigationWidget({super.key, required this.child});
+
+  final StatefulNavigationShell child;
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: child.currentIndex,
+      // currentIndex: _calulateSelectedIndex(context),
+      onTap: (value) => _onItemTapped(value),
+      selectedItemColor: Colors.green,
+      unselectedItemColor: Colors.grey,
+      showUnselectedLabels: true,
+      selectedLabelStyle: const TextStyle(
+        color: Colors.green,
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+      ),
+      unselectedLabelStyle: const TextStyle(
+        color: Colors.grey,
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+      ),
+      items: const [
+        BottomNavigationBarItem(
+          activeIcon: Icon(Icons.home_filled),
+          icon: Icon(Icons.home),
+          label: "Home",
+        ),
+        BottomNavigationBarItem(
+          activeIcon: Icon(Icons.shopify),
+          icon: Icon(Icons.shopping_bag),
+          label: "Cart",
+        ),
+        BottomNavigationBarItem(
+          activeIcon: Icon(Icons.settings),
+          icon: Icon(Icons.settings_applications),
+          label: "Setting",
+        ),
+      ],
+    );
+  }
+
+  void _onItemTapped(int index) {
+    child.goBranch(
+      index,
+      initialLocation: index == child.currentIndex,
+    );
+  }
+}
+```
+
+lib/features/dashboard/presentation/ui/dashboard_screen.dart
+```dart
+class DashboardScreen extends StatefulWidget {
+  final StatefulNavigationShell child;
+  // final Widget child;
+  const DashboardScreen({super.key, required this.child});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: widget.child,
+      bottomNavigationBar: BottomNavigationWidget(
+        child: widget.child,
+      ),
+    );
+  }
+}
+
+```
+
+lib/features/dashboard/presentation/ui/widget/bottom_navigation_widget.dart
+```dart
+class BottomNavigationWidget extends StatelessWidget {
+  const BottomNavigationWidget({super.key, required this.child});
+
+  final StatefulNavigationShell child;
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: child.currentIndex,
+      // currentIndex: _calulateSelectedIndex(context),
+      onTap: (value) => _onItemTapped(value),
+      selectedItemColor: Colors.green,
+      unselectedItemColor: Colors.grey,
+      showUnselectedLabels: true,
+      selectedLabelStyle: const TextStyle(
+        color: Colors.green,
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+      ),
+      unselectedLabelStyle: const TextStyle(
+        color: Colors.grey,
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+      ),
+      items: const [
+        BottomNavigationBarItem(
+          activeIcon: Icon(Icons.home_filled),
+          icon: Icon(Icons.home),
+          label: "Home",
+        ),
+        BottomNavigationBarItem(
+          activeIcon: Icon(Icons.shopify),
+          icon: Icon(Icons.shopping_bag),
+          label: "Cart",
+        ),
+        BottomNavigationBarItem(
+          activeIcon: Icon(Icons.settings),
+          icon: Icon(Icons.settings_applications),
+          label: "Setting",
+        ),
+      ],
+    );
+  }
+
+  void _onItemTapped(int index) {
+    child.goBranch(
+      index,
+      initialLocation: index == child.currentIndex,
     );
   }
 }
