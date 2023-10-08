@@ -2290,7 +2290,7 @@ class _ProductDetailScreenState extends BaseConsumerState<ProductDetailScreen> {
 
 ## 29. ShellRoute → StatefulShellRoute
 
-![2023-10-08 13 05 03](https://github.com/YamamotoDesu/flutter_setup/assets/47273077/43d7efbd-2c9c-49ab-b1f9-97c2862fda8d)
+<image width="300" src="https://github.com/YamamotoDesu/flutter_setup/assets/47273077/43d7efbd-2c9c-49ab-b1f9-97c2862fda8d">
 
 lib/core/route/go_router_provider.dart
 ```dart
